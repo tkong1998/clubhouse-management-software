@@ -1,0 +1,6 @@
+facility_name, rent, open_hour, close_hour, capacity, session_duration, description
+Swimming Pool, 50, 8:00, 20:00, 50, null, The Swimming Pool is open for all residents during summer period. The capacity is 50 persons. Each booking can last for unlimited time as long as the swimming pool is open.
+BBQ Site, 500, 12:00, 21:00, 3, 180, The BBQ Site is open year round. Each booking session is 3-hour long. The Capacity is 3 parties and one party is represented by one person.
+Spa, 200, 11:00, 19:00, 10, 90, The Spa is open year round, each booking session is 90 min. The Capacity is 10 persons.
+Gym, 30, 8:00, 20:00, 30, null, The Gym is open year round. The capacity is 30 persons, and each booking can last for unlimited time as long as the gym is open.
+Conference Hall, 3000, 8:00, 21:00, 1, null, Members can reserve conference hall for holding events, the rent is HKD3000 for each reservation.
