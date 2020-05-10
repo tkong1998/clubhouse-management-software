@@ -52,10 +52,10 @@ public class SigninView implements ViewMaker {
 
         Label message = new Label();
         message.setTextFill(Color.RED);
-        grid.add(message,0,3,2,1);
+        grid.add(message,0,4,2,1);
 
         Button signInBtn = new Button("Sign In");
-        signInBtn.setOnMousePressed(e -> controller.signin(e));
+        signInBtn.setOnMousePressed(e -> controller.signin(e,userTextField,pwdField,message));
         
         Button closeBtn = new Button("Close");
         closeBtn.setOnMousePressed(e -> stage.close());
