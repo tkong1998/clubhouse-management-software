@@ -37,9 +37,16 @@ public class ReservationView implements ViewMaker{
         Button closeBtn = new Button("Close");
         closeBtn.setOnMousePressed(e -> stage.close());
 
-        ButtonBar btnBar = new ButtonBar();
-        btnBar.setPadding(new Insets(10));
-        btnBar.getButtons().addAll(makeReservationBtn,checkinBtn,checkoutBtn,backBtn,closeBtn);
+        double btnWidth = 130;
+        makeReservationBtn.setMinWidth(btnWidth);
+        checkinBtn.setMinWidth(btnWidth);
+        checkoutBtn.setMinWidth(btnWidth);
+        backBtn.setMinWidth(btnWidth);
+        closeBtn.setMinWidth(btnWidth);
+
+        HBox btnBar = new HBox(10);
+        btnBar.setAlignment(Pos.CENTER);
+        btnBar.getChildren().addAll(makeReservationBtn,checkinBtn,checkoutBtn,backBtn,closeBtn);
 
         VBox root = new VBox(10);
         root.setPadding(new Insets(25, 25, 25, 25));

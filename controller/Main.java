@@ -1,7 +1,7 @@
 package controller;
 
 import view.ManagerNavigotionView;
-import view.NavigationView;
+import view.StaffNavigationView;
 import view.ReservationView;
 import view.SigninView;
 import view.ViewUsageView;
@@ -18,9 +18,8 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage stage) {
-		
 		scenes.put("SIGNIN", new SigninView(stage).getScene());
-		scenes.put("NAVIGATION", new NavigationView(stage).getScene());
+		scenes.put("STAFF_NAVIGATION", new StaffNavigationView(stage).getScene());
 		scenes.put("MANAGER_NAVIGATION", new ManagerNavigotionView(stage).getScene());
         scenes.put("RESERVATION", new ReservationView(stage).getScene());
         scenes.put("USAGE", new ViewUsageView(stage).getScene());

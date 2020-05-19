@@ -14,7 +14,6 @@ public class SigninView implements ViewMaker {
 	
 	private Stage stage;
 	
-	/** Must inject a stage */
 	public SigninView(Stage stage) {
 		this.stage = stage;
 	}
@@ -28,7 +27,7 @@ public class SigninView implements ViewMaker {
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
+        grid.setPadding(new Insets(25, 25, 0, 25));
 
         Text sceneTitle = new Text("Welcome!");
         sceneTitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
@@ -56,17 +55,24 @@ public class SigninView implements ViewMaker {
 
         Button signInBtn = new Button("Sign In");
         signInBtn.setOnMousePressed(e -> controller.signin(e,userTextField,pwdField,message));
-        
+
         Button closeBtn = new Button("Close");
         closeBtn.setOnMousePressed(e -> stage.close());
-        ButtonBar btnBar = new ButtonBar();
-        btnBar.setPadding(new Insets(10));
-        btnBar.getButtons().addAll(signInBtn,closeBtn);
+
+        double btnWidth = 110;
+        signInBtn.setMinWidth(btnWidth);
+        closeBtn.setMinWidth(btnWidth);
+        
+        HBox btnBar = new HBox(10);
+        btnBar.setAlignment(Pos.CENTER);
+        btnBar.setPadding(new Insets(0,25,25,25));
+        btnBar.getChildren().addAll(signInBtn,closeBtn);
         
         BorderPane root = new BorderPane();
         root.setCenter(grid);
         root.setBottom(btnBar);
-        Scene scene = new Scene(root,320,240);
+        
+        Scene scene = new Scene(root,280,240);
 		
 		return scene;
 	}

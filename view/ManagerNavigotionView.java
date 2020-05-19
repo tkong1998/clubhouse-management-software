@@ -37,13 +37,25 @@ public class ManagerNavigotionView implements ViewMaker {
         Button viewUsageRateBtn = new Button("View Utilization Rate of Facilities");
         viewUsageRateBtn.setOnMouseClicked(e -> controller.viewUtilizationRate(e));
 
+        Button signoutBtn = new Button("Sign Out");
+        signoutBtn.setOnMousePressed(e -> controller.signout(e));
+
         Button closeBtn = new Button("Close");
         closeBtn.setOnMousePressed(e -> stage.close());
+
+        double btnWidth = 200;
+        manageReservationBtn.setMinWidth(btnWidth);
+        viewUsageBtn.setMinWidth(btnWidth);
+        viewReservationBtn.setMinWidth(btnWidth);
+        viewPopularBtn.setMinWidth(btnWidth);
+        viewUsageRateBtn.setMinWidth(btnWidth);
+        signoutBtn.setMinWidth(btnWidth);
+        closeBtn.setMinWidth(btnWidth);
 
         VBox root = new VBox(10);
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(25, 25, 25, 25));
-        root.getChildren().addAll(sceneTitle,manageReservationBtn,viewUsageBtn,viewReservationBtn,viewPopularBtn,viewUsageRateBtn,closeBtn);
+        root.getChildren().addAll(sceneTitle,manageReservationBtn,viewUsageBtn,viewReservationBtn,viewPopularBtn,viewUsageRateBtn,signoutBtn,closeBtn);
         Scene scene = new Scene(root,320,320);
 
         return scene;

@@ -14,6 +14,7 @@ public class ReservationController {
     // TODO: makeReservation
     public void makeReservation(MouseEvent event){
         // pop out a window to make reservation
+        System.out.println("make reservation pressed");
         stage.setScene(Main.getScenes().get(""));
     }
     // TODO: checkin
@@ -27,9 +28,9 @@ public class ReservationController {
     }
 
     public void back(MouseEvent event){
-        if (SigninController.staff.getRole().equals("staff")){
+        if (SigninController.getStaff().getRole().equals("staff")){
             stage.setScene(Main.getScenes().get("NAVIGATION"));
-        } else if (SigninController.staff.getRole().equals("manager")){
+        } else if (SigninController.getStaff().getRole().equals("manager")){
             stage.setScene(Main.getScenes().get("MANAGER_NAVIGATION"));
         }
     }

@@ -1,4 +1,5 @@
 package controller;
+import view.*;
 
 import java.util.*;
 import java.io.*;
@@ -8,16 +9,21 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
 
+
 public class SigninController {
 
 	private Stage stage;
 	private ArrayList<Staff> staffList = new ArrayList<Staff>();
 	private String path = "data/staff.csv";
-	public static Staff staff;
+	private static Staff staff;
 	
 	/** Inject the stage from {@link Main} */
 	public SigninController(Stage stage) {
 		this.stage = stage;
+	}
+
+	public static Staff getStaff(){
+		return SigninController.staff;
 	}
 
 	private void loadStaff(){
@@ -82,12 +88,18 @@ public class SigninController {
 		}
 		if (staffRole.equals("staff")) {
 			message.setText("");
-			stage.setScene(Main.getScenes().get("NAVIGATION"));
+			stage.setScene(Main.getScenes().get("STAFF_NAVIGATION"));
 		} else if (staffRole.equals("manager")) {
 			message.setText("");
 			stage.setScene(Main.getScenes().get("MANAGER_NAVIGATION"));
 		} else {
 			message.setText("You have no authority to login to this system");
 		}
+		Main.getScenes().put("SIGNIN", new SigninView(stage).getScene());
 	}
+
+	public static void signout(){
+		SigninController.staff = null;
+	}
+
 }
