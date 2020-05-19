@@ -14,7 +14,7 @@ public class Staff extends User {
         return this.staffID;
     }
 
-    public String role(){
+    public String getRole(){
         return this.role;
     }
 }
