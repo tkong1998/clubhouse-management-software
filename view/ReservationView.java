@@ -1,5 +1,6 @@
 package view;
 
+import controller.Reservation;
 import controller.ReservationController;
 import javafx.geometry.*;
 import javafx.scene.Scene;
@@ -25,6 +26,7 @@ public class ReservationView implements ViewMaker{
         
         // TODO: Add reservation information
         Text label = new Text("Remember to deploy a table");
+        TableView<Reservation> reservations = new TableView<Reservation>();
 
         Button makeReservationBtn = new Button("Make Reservation");
         makeReservationBtn.setOnMousePressed(e -> controller.makeReservation(e));
@@ -50,7 +52,7 @@ public class ReservationView implements ViewMaker{
 
         VBox root = new VBox(10);
         root.setPadding(new Insets(25, 25, 25, 25));
-        root.getChildren().addAll(sceneTitle,label,btnBar);
+        root.getChildren().addAll(sceneTitle,label,reservations,btnBar);
         Scene scene = new Scene(root);
         return scene;
     }
