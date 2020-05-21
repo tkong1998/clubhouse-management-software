@@ -1,5 +1,6 @@
 package controller;
 
+import view.*;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -49,11 +50,8 @@ public class ReservationController {
         return table;
     }
 
-    // TODO: makeReservation
-    public void makeReservation(MouseEvent event) {
-        // pop out a window to make reservation
-        System.out.println("make reservation pressed");
-        stage.setScene(Main.getScenes().get(""));
+    public void goToMakeReservation(MouseEvent event) {
+        stage.setScene(Main.getScenes().get("MAKE_RESERVATION"));
     }
 
     public void checkin(MouseEvent event, TableView<Reservation> table) {
@@ -88,8 +86,14 @@ public class ReservationController {
         }
     }
 
-    // TODO: display
-    public void display() {
+    // TODO: Finish make reservation
+    public void makeReservation(MouseEvent event){
+        Main.getScenes().put("MAKE_RESERVATION", new MakeReservationView(stage).getScene());
+        stage.setScene(Main.getScenes().get("RESERVATION"));
+    }
 
+    public void cancel(MouseEvent event){
+        Main.getScenes().put("MAKE_RESERVATION", new MakeReservationView(stage).getScene());
+        stage.setScene(Main.getScenes().get("RESERVATION"));
     }
 }

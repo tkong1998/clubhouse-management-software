@@ -1,8 +1,6 @@
 package view;
 
-import controller.Reservation;
-import controller.ReservationController;
-import controller.ReservationRecord;
+import controller.*;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -26,12 +24,10 @@ public class ReservationView extends MainView implements ViewMaker{
         Text sceneTitle = new Text("Manage Reservations");
         sceneTitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
         
-        // TODO: Add reservation information
         TableView<Reservation> reservations = controller.makeTable();
-        
 
         Button makeReservationBtn = new Button("Make Reservation");
-        makeReservationBtn.setOnMousePressed(e -> controller.makeReservation(e));
+        makeReservationBtn.setOnMousePressed(e -> controller.goToMakeReservation(e));
         Button checkinBtn = new Button("Check In");
         checkinBtn.setOnMousePressed(e -> controller.checkin(e,reservations));
         Button checkoutBtn = new Button("Check Out");
