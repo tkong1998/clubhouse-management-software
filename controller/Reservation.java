@@ -8,7 +8,7 @@ public class Reservation {
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
-    private Duration duration;
+    private long duration;
     private String status;
 
     public Reservation(Member memberID, Facility facility, LocalDate date, LocalTime start, LocalTime end, String status){
@@ -19,7 +19,7 @@ public class Reservation {
         this.endTime = end;
         this.status = status;
 
-        this.duration = Duration.between(this.startTime,this.endTime);
+        this.duration = Duration.between(this.startTime,this.endTime).toMinutes();
     }
 
     public Member getMember(){
@@ -42,7 +42,7 @@ public class Reservation {
         return this.endTime;
     }
 
-    public Duration getDuration(){
+    public long getDuration(){
         return this.duration;
     }
 
