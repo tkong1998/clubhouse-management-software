@@ -58,7 +58,7 @@ public class ReservationController {
         ArrayList<Member> members = memberList.getMemberList();
         ObservableList<String> list = FXCollections.observableArrayList();
         for (Member member : members) {
-            list.add(member.getName());
+            list.add(member.getMemberID());
         }
         ComboBox<String> memberBox = new ComboBox<String>();
         memberBox.getItems().addAll(list);
@@ -125,10 +125,22 @@ public class ReservationController {
     }
 
     // TODO: Finish make reservation
-    public void makeReservation(MouseEvent event) {
-        LocalDate date = LocalDate.parse("2016-08-16");
-        LocalTime start = LocalTime.parse("10:00");
-        System.out.println(reservationRecord.isAvailable("member001", "Spa", date, start));
+    public void makeReservation(MouseEvent event, ComboBox<String> memberComboBox, ComboBox<String> facilityComboBox, DatePicker datePicker, ComboBox<String> startComboBox) {
+        if (memberComboBox.getValue() == null || facilityComboBox.getValue() == null || datePicker.getValue() == null || startComboBox.getValue() == null) {
+            System.out.println("Cannot be null");
+            return;
+        }
+
+        String memberID = memberComboBox.getValue();
+        String facility = facilityComboBox.getValue();
+        LocalDate date = datePicker.getValue();
+        LocalTime start = LocalTime.parse(startComboBox.getValue());
+        LocalTime end = start.plus(facilityList.findFacility(facility).getDuration());
+        if (reservationRecord.isAvailable(memberID, facility, date, start)){
+            Reservation reservation = new Reservation(memberList.findMember(memberID), facilityList.findFacility(facility), date, start, end, "Booked");
+            reservationRecord.addRecord(reservation);
+            reservationRecord.writeRecord();
+        }
 
         Main.getScenes().put("RESERVATION", new ReservationView(stage).getScene());
         Main.getScenes().put("MAKE_RESERVATION", new MakeReservationView(stage).getScene());

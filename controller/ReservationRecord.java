@@ -8,6 +8,8 @@ public class ReservationRecord {
 
     private ArrayList<Reservation> reservationRecord;
     private final String PATH = "./data/reservation.csv";
+    private MemberList memberList;
+    private FacilityList facilityList;;
 
     public ReservationRecord() {
         reservationRecord = new ArrayList<Reservation>();
@@ -26,9 +28,8 @@ public class ReservationRecord {
             return;
         }
         // load the reservation record
-        MemberList memberList = new MemberList();
-        FacilityList facilityList = new FacilityList();
-
+        memberList = new MemberList();
+        facilityList = new FacilityList();
         try (Scanner input = new Scanner(file)) {
             String line, lineData[];
             for (int i = 0; input.hasNextLine(); i++) {
@@ -68,11 +69,26 @@ public class ReservationRecord {
 
     //TODO
     public boolean isAvailable(String memberID, String facility, LocalDate date, LocalTime start) {
-        
+        LocalTime end = start.plus(facilityList.findFacility(facility).getDuration());
         for (Reservation reservation : this.reservationRecord) {
             int count = 0;
             if (reservation.getStatus().equals("Checked Out") || reservation.getStatus().equals("Cancelled")){
                 continue;
+            }
+            if (reservation.getDate().equals(date)){
+                if (reservation.getStart().isBefore(end) && reservation.getEnd().isAfter(start)){
+                    if (reservation.getMember().getMemberID().equals(memberID)){
+                        return false;
+                    }
+                    if (reservation.getFacility().getFacility().equals(facility)) {
+                        if (count < reservation.getFacility().getCapacity()){
+                            count++;
+                            continue;
+                        } else {
+                            return false;
+                        }
+                    }
+                }
             }
         }
         return true;
@@ -110,14 +126,13 @@ public class ReservationRecord {
     public void writeRecord() {
         try {
             FileWriter file = new FileWriter(PATH);
-            file.write("member_id,booked_facility,date,start_time,end_time,duration,status\n");
+            file.write("member_id,booked_facility,date,start_time,end_time,status\n");
             for (Reservation reservation : reservationRecord) {
                 file.write(reservation.getMember().getMemberID() + ", ");
                 file.write(reservation.getFacility().getFacility() + ", ");
                 file.write(reservation.getDate().toString() + ", ");
                 file.write(reservation.getStart().toString() + ", ");
                 file.write(reservation.getEnd().toString() + ", ");
-                file.write(reservation.getDuration() + ", ");
                 file.write(reservation.getStatus() + "\n");
             }
             file.close();

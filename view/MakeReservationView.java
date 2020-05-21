@@ -78,7 +78,7 @@ public class MakeReservationView extends MainView implements ViewMaker {
         startComboBox.setOnMousePressed(e -> controller.updateTimeBox(e, facilityComboBox, startComboBox));
 
         Button submitBtn = new Button("Sumbit");
-        submitBtn.setOnMousePressed(e -> controller.makeReservation(e));
+        submitBtn.setOnMousePressed(e -> controller.makeReservation(e, memberComboBox, facilityComboBox, datePicker,startComboBox));
 
         Button cancelBtn = new Button("Cancel");
         cancelBtn.setOnMousePressed(e -> controller.cancel(e));
