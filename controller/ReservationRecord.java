@@ -15,7 +15,7 @@ public class ReservationRecord {
 
         // if file don't exist, then create the file and return
         if (!file.exists()) {
-            String header = "member_id,booked_facility,date,start_time,end_time,duration,status";
+            String header = "member_id, booked_facility, date, start_time, end_time, status";
             try (FileOutputStream outputFile = new FileOutputStream(PATH)) {
                 outputFile.write(header.getBytes());
                 outputFile.flush();
@@ -49,9 +49,7 @@ public class ReservationRecord {
                 LocalDate date = LocalDate.parse(lineData[2].trim());
                 LocalTime start = LocalTime.parse(lineData[3].trim());
                 LocalTime end = LocalTime.parse(lineData[4].trim());
-                
-                // long duration = Long.parseLong(lineData[5]);
-                String status = lineData[6].trim();
+                String status = lineData[5].trim();
                 Reservation reservation = new Reservation(member, facility, date, start, end, status);
                 addRecord(reservation);
             }
@@ -66,6 +64,18 @@ public class ReservationRecord {
 
     public int getSize() {
         return this.reservationRecord.size();
+    }
+
+    //TODO
+    public boolean isAvailable(String memberID, String facility, LocalDate date, LocalTime start) {
+        
+        for (Reservation reservation : this.reservationRecord) {
+            int count = 0;
+            if (reservation.getStatus().equals("Checked Out") || reservation.getStatus().equals("Cancelled")){
+                continue;
+            }
+        }
+        return true;
     }
 
     public List<Facility> getThreeMostPopularFacility() {
@@ -115,7 +125,6 @@ public class ReservationRecord {
         } catch (Exception e) {
             e.getStackTrace();
         }
-
     }
 
 }

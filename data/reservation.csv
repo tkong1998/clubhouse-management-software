@@ -1,1 +1,3 @@
-member_id,booked_facility,date,start_time,end_time,duration,status
+member_id, booked_facility, date, start_time, end_time, status
+member001, Spa, 2016-08-16, 10:00, 11:30, Checked out
+member001, Spa, 2017-02-03, 10:00, 11:30, Booked

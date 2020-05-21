@@ -11,7 +11,6 @@ import javafx.stage.*;
 import javafx.util.Callback;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
 public class MakeReservationView extends MainView implements ViewMaker {
@@ -38,13 +37,13 @@ public class MakeReservationView extends MainView implements ViewMaker {
         Label memberLabel = new Label("Member:");
         grid.add(memberLabel, 0, 1);
 
-        ComboBox memberComboBox = new ComboBox<>();
+        ComboBox<String> memberComboBox = controller.getMemberBox();
         grid.add(memberComboBox, 1, 1);
 
         Label facilityLabel = new Label("Facility:");
         grid.add(facilityLabel, 0, 2);
 
-        ComboBox facilityComboBox = new ComboBox<>();
+        ComboBox<String> facilityComboBox = controller.getFacilityBox();
         grid.add(facilityComboBox, 1, 2);
 
         Label dateLabel = new Label("Date:");
@@ -73,22 +72,10 @@ public class MakeReservationView extends MainView implements ViewMaker {
         Label startLabel = new Label("Start:");
         grid.add(startLabel, 0, 4);
 
-        ComboBox startHComboBox = new ComboBox<>();
-        Label colonLabel = new Label(":");
-        ComboBox startMComboBox = new ComboBox<>();
-        HBox startBox = new HBox(5);
-        startBox.getChildren().addAll(startHComboBox, colonLabel, startMComboBox);
-        grid.add(startBox, 1, 4);
+        ComboBox<String> startComboBox = new ComboBox<>();
+        grid.add(startComboBox, 1, 4);
 
-        Label endLabel = new Label("End:");
-        grid.add(endLabel, 0, 5);
-
-        ComboBox endHComboBox = new ComboBox<>();
-        Label colonLabel2 = new Label(":");
-        ComboBox endMComboBox = new ComboBox<>();
-        HBox endtBox = new HBox(5);
-        endtBox.getChildren().addAll(endHComboBox, colonLabel2, endMComboBox);
-        grid.add(endtBox, 1, 5);
+        startComboBox.setOnMousePressed(e -> controller.updateTimeBox(e, facilityComboBox, startComboBox));
 
         Button submitBtn = new Button("Sumbit");
         submitBtn.setOnMousePressed(e -> controller.makeReservation(e));

@@ -18,7 +18,6 @@ public class Reservation {
         this.startTime = start;
         this.endTime = end;
         this.status = status;
-
         this.duration = Duration.between(this.startTime,this.endTime).toMinutes();
     }
 

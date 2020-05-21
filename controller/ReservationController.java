@@ -3,6 +3,7 @@ package controller;
 import view.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -15,39 +16,76 @@ import javafx.stage.Stage;
 public class ReservationController {
 
     private Stage stage;
+    private MemberList memberList;
+    private FacilityList facilityList;
     private ReservationRecord reservationRecord;
 
     public ReservationController(Stage stage) {
         this.stage = stage;
+        this.memberList = new MemberList();
+        this.facilityList = new FacilityList();
         this.reservationRecord = new ReservationRecord();
     }
 
     public TableView<Reservation> makeTable() {
         ArrayList<Reservation> reservationList = reservationRecord.getRecords();
         ObservableList<Reservation> list = FXCollections.observableArrayList(reservationList);
-        
+
         TableView<Reservation> table = new TableView<>();
         TableColumn<Reservation, String> memberCol = new TableColumn<Reservation, String>("Member ID");
         TableColumn<Reservation, String> facilityCol = new TableColumn<Reservation, String>("Facility");
         TableColumn<Reservation, LocalDate> dateCol = new TableColumn<Reservation, LocalDate>("Date");
         TableColumn<Reservation, String> startCol = new TableColumn<Reservation, String>("Start Time");
         TableColumn<Reservation, String> endCol = new TableColumn<Reservation, String>("End Time");
-        TableColumn<Reservation, Long> durationCol = new TableColumn<Reservation,Long>("Duration");
         TableColumn<Reservation, String> statusCol = new TableColumn<Reservation, String>("Status");
 
         memberCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getMember().getMemberID()));
-        facilityCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getFacility().getFacility()));
+        facilityCol
+                .setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getFacility().getFacility()));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         startCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getStart().toString()));
         endCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEnd().toString()));
-        durationCol.setCellValueFactory(new PropertyValueFactory<>("duration"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        table.getColumns().setAll(memberCol, facilityCol, dateCol, startCol, endCol, durationCol, statusCol);
+        table.getColumns().setAll(memberCol, facilityCol, dateCol, startCol, endCol, statusCol);
         table.setItems(list);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         return table;
+    }
+
+    public ComboBox<String> getMemberBox() {
+        ArrayList<Member> members = memberList.getMemberList();
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for (Member member : members) {
+            list.add(member.getName());
+        }
+        ComboBox<String> memberBox = new ComboBox<String>();
+        memberBox.getItems().addAll(list);
+        return memberBox;
+    }
+
+    public ComboBox<String> getFacilityBox() {
+        ArrayList<Facility> facilities = facilityList.getFacilityList();
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for (Facility facility : facilities) {
+            list.add(facility.getFacility());
+        }
+        ComboBox<String> facilityBox = new ComboBox<String>();
+        facilityBox.getItems().addAll(list);
+        return facilityBox;
+    }
+
+    public void updateTimeBox(MouseEvent event, ComboBox<String> facilityCombo, ComboBox<String> sHCombo) {
+        String facilityName = facilityCombo.getValue();
+        Facility facility = facilityList.findFacility(facilityName);
+        LocalTime start = facility.getStartHour();
+        LocalTime end = facility.getCloseHour();
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for (LocalTime time = start; !time.equals(end.minus(facility.getDuration())); time = time.plusMinutes(30)) {
+            list.add(time.toString());
+        }
+        sHCombo.getItems().addAll(list);
     }
 
     public void goToMakeReservation(MouseEvent event) {
@@ -55,9 +93,9 @@ public class ReservationController {
     }
 
     public void checkin(MouseEvent event, TableView<Reservation> table) {
-        if (table.getSelectionModel().getSelectedItem() != null){
+        if (table.getSelectionModel().getSelectedItem() != null) {
             Reservation reservation = table.getSelectionModel().getSelectedItem();
-            if (reservation.getStatus().equals("Booked")){
+            if (reservation.getStatus().equals("Booked")) {
                 reservation.setStatus("Checked In");
             }
             System.out.println(reservation.getStatus());
@@ -67,9 +105,9 @@ public class ReservationController {
     }
 
     public void checkout(MouseEvent event, TableView<Reservation> table) {
-        if (table.getSelectionModel().getSelectedItem() != null){
+        if (table.getSelectionModel().getSelectedItem() != null) {
             Reservation reservation = table.getSelectionModel().getSelectedItem();
-            if (reservation.getStatus().equals("Checked In")){
+            if (reservation.getStatus().equals("Checked In")) {
                 reservation.setStatus("Checked Out");
             }
             System.out.println(reservation.getStatus());
@@ -87,12 +125,17 @@ public class ReservationController {
     }
 
     // TODO: Finish make reservation
-    public void makeReservation(MouseEvent event){
+    public void makeReservation(MouseEvent event) {
+        LocalDate date = LocalDate.parse("2016-08-16");
+        LocalTime start = LocalTime.parse("10:00");
+        System.out.println(reservationRecord.isAvailable("member001", "Spa", date, start));
+
+        Main.getScenes().put("RESERVATION", new ReservationView(stage).getScene());
         Main.getScenes().put("MAKE_RESERVATION", new MakeReservationView(stage).getScene());
         stage.setScene(Main.getScenes().get("RESERVATION"));
     }
 
-    public void cancel(MouseEvent event){
+    public void cancel(MouseEvent event) {
         Main.getScenes().put("MAKE_RESERVATION", new MakeReservationView(stage).getScene());
         stage.setScene(Main.getScenes().get("RESERVATION"));
     }
