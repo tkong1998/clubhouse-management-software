@@ -35,7 +35,7 @@ public class ReservationView extends MainView implements ViewMaker{
         Button checkinBtn = new Button("Check In");
         checkinBtn.setOnMousePressed(e -> controller.checkin(e,reservations));
         Button checkoutBtn = new Button("Check Out");
-        checkoutBtn.setOnMousePressed(e -> controller.checkout(e));
+        checkoutBtn.setOnMousePressed(e -> controller.checkout(e,reservations));
         Button backBtn = new Button("Back");
         backBtn.setOnMousePressed(e -> controller.back(e));
         Button closeBtn = new Button("Close");

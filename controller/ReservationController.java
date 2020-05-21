@@ -42,7 +42,6 @@ public class ReservationController {
         durationCol.setCellValueFactory(new PropertyValueFactory<>("duration"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        
         table.getColumns().setAll(memberCol, facilityCol, dateCol, startCol, endCol, durationCol, statusCol);
         table.setItems(list);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -57,7 +56,6 @@ public class ReservationController {
         stage.setScene(Main.getScenes().get(""));
     }
 
-    // TODO: checkin
     public void checkin(MouseEvent event, TableView<Reservation> table) {
         if (table.getSelectionModel().getSelectedItem() != null){
             Reservation reservation = table.getSelectionModel().getSelectedItem();
@@ -70,10 +68,16 @@ public class ReservationController {
         reservationRecord.writeRecord();
     }
 
-    // TODO: checkout
-    public void checkout(MouseEvent event) {
-        System.out.println("checkout pressed");
-
+    public void checkout(MouseEvent event, TableView<Reservation> table) {
+        if (table.getSelectionModel().getSelectedItem() != null){
+            Reservation reservation = table.getSelectionModel().getSelectedItem();
+            if (reservation.getStatus().equals("Checked In")){
+                reservation.setStatus("Checked Out");
+            }
+            System.out.println(reservation.getStatus());
+        }
+        table.refresh();
+        reservationRecord.writeRecord();
     }
 
     public void back(MouseEvent event) {

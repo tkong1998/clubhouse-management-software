@@ -3,7 +3,6 @@ package controller;
 import java.io.*;
 import java.util.*;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 
 public class ReservationRecord {
 
@@ -45,14 +44,10 @@ public class ReservationRecord {
                 lineData = line.split(",");
                 String memberID = lineData[0].trim();
                 Member member = memberList.findMember(memberID);
-                System.out.println("1!!");
                 String facilityName = lineData[1].trim();
                 Facility facility = facilityList.findFacility(facilityName);
-                System.out.println("2!!");
                 LocalDate date = LocalDate.parse(lineData[2].trim());
-                System.out.println("3!!");
                 LocalTime start = LocalTime.parse(lineData[3].trim());
-                System.out.println("4!!");
                 LocalTime end = LocalTime.parse(lineData[4].trim());
                 
                 // long duration = Long.parseLong(lineData[5]);
