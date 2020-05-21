@@ -10,24 +10,24 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-public class SigninView implements ViewMaker {
+public class SigninView extends MainView implements ViewMaker {
 	
 	private Stage stage;
 	
 	public SigninView(Stage stage) {
+        super();
 		this.stage = stage;
 	}
 
 	@Override
 	public Scene getScene() {
-		
 		// Inject stage from Main into controller
 		SigninController controller = new SigninController(stage);
         GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 25, 10, 25));
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 0, 25));
 
         Text sceneTitle = new Text("Welcome!");
         sceneTitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
@@ -65,14 +65,13 @@ public class SigninView implements ViewMaker {
         
         HBox btnBar = new HBox(10);
         btnBar.setAlignment(Pos.CENTER);
-        btnBar.setPadding(new Insets(0,25,25,25));
         btnBar.getChildren().addAll(signInBtn,closeBtn);
+        grid.add(btnBar,0,5,2,1);
         
-        BorderPane root = new BorderPane();
+        BorderPane root = super.getRoot();
         root.setCenter(grid);
-        root.setBottom(btnBar);
         
-        Scene scene = new Scene(root,280,240);
+        Scene scene = new Scene(root);
 		
 		return scene;
 	}

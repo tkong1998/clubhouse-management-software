@@ -8,11 +8,12 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-public class ViewUsageView implements ViewMaker{
+public class ViewUsageView extends MainView implements ViewMaker{
 
     private Stage stage;
 
     public ViewUsageView(Stage stage) {
+        super();
         this.stage = stage;
     }
 
@@ -34,10 +35,15 @@ public class ViewUsageView implements ViewMaker{
         HBox btnBar = new HBox(10);
         btnBar.getChildren().addAll(backBtn,closeBtn);
 
-        VBox root = new VBox(10);
-        root.setPadding(new Insets(25, 25, 25, 25));
-        root.getChildren().addAll(sceneTitle,label,btnBar);
+        VBox container = new VBox(10);
+        container.setPadding(new Insets(10, 25, 10, 25));
+        container.getChildren().addAll(sceneTitle,label,btnBar);
+
+        BorderPane root = super.getRoot();
+        root.setCenter(container);
+
         Scene scene = new Scene(root);
+
         return scene;
     }
 }

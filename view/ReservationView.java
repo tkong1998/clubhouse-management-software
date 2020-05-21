@@ -9,11 +9,12 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-public class ReservationView implements ViewMaker{
+public class ReservationView extends MainView implements ViewMaker{
 
     private Stage stage;
 
     public ReservationView(Stage stage) {
+        super();
         this.stage = stage;
     }
 
@@ -50,9 +51,13 @@ public class ReservationView implements ViewMaker{
         btnBar.setAlignment(Pos.CENTER);
         btnBar.getChildren().addAll(makeReservationBtn,checkinBtn,checkoutBtn,backBtn,closeBtn);
 
-        VBox root = new VBox(10);
-        root.setPadding(new Insets(25, 25, 25, 25));
-        root.getChildren().addAll(sceneTitle,label,reservations,btnBar);
+        VBox container = new VBox(10);
+        container.setPadding(new Insets(10, 25, 10, 25));
+        container.getChildren().addAll(sceneTitle,label,reservations,btnBar);
+
+        BorderPane root = super.getRoot();
+        root.setCenter(container);
+
         Scene scene = new Scene(root);
         return scene;
     }

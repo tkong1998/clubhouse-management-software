@@ -8,11 +8,12 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-public class StaffNavigationView implements ViewMaker{
+public class StaffNavigationView extends MainView implements ViewMaker{
 
     private Stage stage;
 
     public StaffNavigationView(Stage stage) {
+        super();
         this.stage = stage;
     }
 
@@ -41,11 +42,15 @@ public class StaffNavigationView implements ViewMaker{
         signoutBtn.setMinWidth(btnWidth);
         closeBtn.setMinWidth(btnWidth);
 
-        VBox root = new VBox(10);
-        root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(25, 25, 25, 25));
-        root.getChildren().addAll(sceneTitle,manageReservationBtn,viewUsageBtn,signoutBtn,closeBtn);
-        Scene scene = new Scene(root,320,240);
+        VBox btnBox = new VBox(10);
+        btnBox.setAlignment(Pos.CENTER);
+        btnBox.setPadding(new Insets(10, 25, 10, 25));
+        btnBox.getChildren().addAll(sceneTitle,manageReservationBtn,viewUsageBtn,signoutBtn,closeBtn);
+        
+        BorderPane root = super.getRoot();
+        root.setCenter(btnBox);
+        
+        Scene scene = new Scene(root);
         return scene;
     }
 
