@@ -3,7 +3,7 @@ package controller;
 import java.time.*;
 
 public class Reservation {
-    private Member memberID;
+    private Member member;
     private Facility facility;
     private LocalDate date;
     private LocalTime startTime;
@@ -11,8 +11,8 @@ public class Reservation {
     private long duration;
     private String status;
 
-    public Reservation(Member memberID, Facility facility, LocalDate date, LocalTime start, LocalTime end, String status){
-        this.memberID = memberID;
+    public Reservation(Member member, Facility facility, LocalDate date, LocalTime start, LocalTime end, String status){
+        this.member = member;
         this.facility = facility;
         this.date = date;
         this.startTime = start;
@@ -22,7 +22,7 @@ public class Reservation {
     }
 
     public Member getMember(){
-        return this.memberID;
+        return this.member;
     }
 
     public Facility getFacility(){
