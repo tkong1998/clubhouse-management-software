@@ -20,9 +20,10 @@ public class Main extends Application {
 		scenes.put("RESERVATION", new ReservationView(stage).getScene());
 		scenes.put("MAKE_RESERVATION", new MakeReservationView(stage).getScene());
 		scenes.put("VIEW_RESERVATION", new ViewReservationsView(stage).getScene());
+		scenes.put("TOP3", new ViewTop3View(stage).getScene());
         scenes.put("USAGE", new ViewUsageView(stage).getScene());
 		
-		stage.setScene(scenes.get("SIGNIN"));
+		stage.setScene(scenes.get("TOP3"));
 		stage.setTitle("HandShake Club House");
 		stage.show();
 	}
