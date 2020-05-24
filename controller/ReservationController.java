@@ -21,14 +21,20 @@ public class ReservationController {
         this.fileLoader = new FileLoader();
     }
 
-    public TableView<Reservation> makeTable() {
+    public TableView<Reservation> getTable(boolean isViewOnly) {
         ArrayList<Reservation> reservations = fileLoader.getReservations();
         ObservableList<Reservation> list = FXCollections.observableArrayList();
-        for (Reservation reservation : reservations) {
-            if (reservation.getDate().isBefore(LocalDate.now()) || (reservation.getStatus().equals("Checked Out"))) {
-                continue;
+        if (isViewOnly) {
+            list = FXCollections.observableArrayList(reservations);
+        } else {
+
+            for (Reservation reservation : reservations) {
+                if (reservation.getDate().isBefore(LocalDate.now())
+                        || (reservation.getStatus().equals("Checked Out"))) {
+                    continue;
+                }
+                list.add(reservation);
             }
-            list.add(reservation);
         }
 
         TableView<Reservation> table = new TableView<>();
@@ -80,7 +86,8 @@ public class ReservationController {
         return facilityBox;
     }
 
-    public void updateTimeBox(MouseEvent event, ComboBox<String> facilityCombo, ComboBox<String> sHCombo, DatePicker datePicker) {
+    public void updateTimeBox(MouseEvent event, ComboBox<String> facilityCombo, ComboBox<String> sHCombo,
+            DatePicker datePicker) {
         String facilityName = facilityCombo.getValue();
         Facility facility = fileLoader.findFacility(facilityName);
         LocalTime start = facility.getStartHour();
@@ -88,17 +95,17 @@ public class ReservationController {
         LocalTime now = LocalTime.now();
 
         if (datePicker.getValue() != null) {
-            if (datePicker.getValue().equals(LocalDate.now())){
-                if (start.isBefore(now)){
-                    if (now.getMinute() < 30){
-                        start = LocalTime.of(now.getHour(),30);
+            if (datePicker.getValue().equals(LocalDate.now())) {
+                if (start.isBefore(now)) {
+                    if (now.getMinute() < 30) {
+                        start = LocalTime.of(now.getHour(), 30);
                     } else {
-                        start = LocalTime.of(now.getHour()+1,0);
+                        start = LocalTime.of(now.getHour() + 1, 0);
                     }
                 }
             }
         }
-        
+
         ObservableList<String> list = FXCollections.observableArrayList();
         for (LocalTime time = start; !time.isAfter(end.minus(facility.getDuration())); time = time.plusMinutes(30)) {
             list.add(time.toString());
@@ -137,7 +144,7 @@ public class ReservationController {
     }
 
     public void cancelBooking(MouseEvent e, TableView<Reservation> table) {
-		if (table.getSelectionModel().getSelectedItem() != null) {
+        if (table.getSelectionModel().getSelectedItem() != null) {
             Reservation reservation = table.getSelectionModel().getSelectedItem();
             if (reservation.getStatus().equals("Booked")) {
                 reservation.setStatus("Cancelled");
