@@ -9,7 +9,6 @@ import javafx.beans.property.*;
 import javafx.collections.*;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ReservationController {
