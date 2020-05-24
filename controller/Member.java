@@ -5,8 +5,8 @@ public class Member extends User{
     private String address;
     private String phone;
 
-    public Member(String name, String id, String email, String address, String phone){
-        super(name,"",id);
+    public Member(String id, String name, String address, String email, String phone){
+        super(name,id,"");
         this.email = email;
         this.address = address;
         this.phone = phone;

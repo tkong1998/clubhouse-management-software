@@ -2,50 +2,44 @@ package controller;
 
 import view.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.*;
 
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.collections.*;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
 
 public class ReservationController {
 
     private Stage stage;
-    private MemberList memberList;
-    private FacilityList facilityList;
-    private ReservationRecord reservationRecord;
+    private FileLoader fileLoader;
 
     public ReservationController(Stage stage) {
         this.stage = stage;
-        this.memberList = new MemberList();
-        this.facilityList = new FacilityList();
-        this.reservationRecord = new ReservationRecord();
+        this.fileLoader = new FileLoader();
     }
 
     public TableView<Reservation> makeTable() {
-        ArrayList<Reservation> reservationList = reservationRecord.getRecords();
-        ObservableList<Reservation> list = FXCollections.observableArrayList(reservationList);
+        ArrayList<Reservation> reservations = fileLoader.getReservations();
+        ObservableList<Reservation> list = FXCollections.observableArrayList(reservations);
 
         TableView<Reservation> table = new TableView<>();
-        TableColumn<Reservation, String> memberCol = new TableColumn<Reservation, String>("Member ID");
+        TableColumn<Reservation, String> memberCol = new TableColumn<Reservation, String>("Member");
         TableColumn<Reservation, String> facilityCol = new TableColumn<Reservation, String>("Facility");
-        TableColumn<Reservation, LocalDate> dateCol = new TableColumn<Reservation, LocalDate>("Date");
+        TableColumn<Reservation, String> dateCol = new TableColumn<Reservation, String>("Date");
         TableColumn<Reservation, String> startCol = new TableColumn<Reservation, String>("Start Time");
         TableColumn<Reservation, String> endCol = new TableColumn<Reservation, String>("End Time");
         TableColumn<Reservation, String> statusCol = new TableColumn<Reservation, String>("Status");
 
-        memberCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getMember().getId()));
+        memberCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getMember().getName()));
         facilityCol
                 .setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getFacility().getFacility()));
-        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        dateCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getDate().toString()));
         startCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getStart().toString()));
         endCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEnd().toString()));
-        statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+        statusCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getStatus().toString()));
 
         table.getColumns().setAll(memberCol, facilityCol, dateCol, startCol, endCol, statusCol);
         table.setItems(list);
@@ -55,7 +49,7 @@ public class ReservationController {
     }
 
     public ComboBox<String> getMemberBox() {
-        ArrayList<Member> members = memberList.getMemberList();
+        ArrayList<Member> members = fileLoader.getmembers();
         ObservableList<String> list = FXCollections.observableArrayList();
         for (Member member : members) {
             list.add(member.getId());
@@ -66,7 +60,7 @@ public class ReservationController {
     }
 
     public ComboBox<String> getFacilityBox() {
-        ArrayList<Facility> facilities = facilityList.getFacilityList();
+        ArrayList<Facility> facilities = fileLoader.getFacilities();
         ObservableList<String> list = FXCollections.observableArrayList();
         for (Facility facility : facilities) {
             list.add(facility.getFacility());
@@ -78,7 +72,7 @@ public class ReservationController {
 
     public void updateTimeBox(MouseEvent event, ComboBox<String> facilityCombo, ComboBox<String> sHCombo) {
         String facilityName = facilityCombo.getValue();
-        Facility facility = facilityList.findFacility(facilityName);
+        Facility facility = fileLoader.findFacility(facilityName);
         LocalTime start = facility.getStartHour();
         LocalTime end = facility.getCloseHour();
         ObservableList<String> list = FXCollections.observableArrayList();
@@ -101,7 +95,7 @@ public class ReservationController {
             System.out.println(reservation.getStatus());
         }
         table.refresh();
-        reservationRecord.writeRecord();
+        fileLoader.writeRecords();
     }
 
     public void checkout(MouseEvent event, TableView<Reservation> table) {
@@ -113,7 +107,7 @@ public class ReservationController {
             System.out.println(reservation.getStatus());
         }
         table.refresh();
-        reservationRecord.writeRecord();
+        fileLoader.writeRecords();
     }
 
     public void back(MouseEvent event) {
@@ -133,17 +127,17 @@ public class ReservationController {
             return;
         }
 
-        String memberID = memberComboBox.getValue();
-        String facility = facilityComboBox.getValue();
-        LocalDate date = datePicker.getValue();
-        LocalTime start = LocalTime.parse(startComboBox.getValue());
-        LocalTime end = start.plus(facilityList.findFacility(facility).getDuration());
-        if (reservationRecord.isAvailable(memberID, facility, date, start)) {
-            Reservation reservation = new Reservation(memberList.findMember(memberID),
-                    facilityList.findFacility(facility), date, start, end, "Booked");
-            reservationRecord.addRecord(reservation);
-            reservationRecord.writeRecord();
-        }
+        // String memberID = memberComboBox.getValue();
+        // String facility = facilityComboBox.getValue();
+        // LocalDate date = datePicker.getValue();
+        // LocalTime start = LocalTime.parse(startComboBox.getValue());
+        // LocalTime end = start.plus(fileLoader.findFacility(facility).getDuration());
+        // if (reservationRecord.isAvailable(memberID, facility, date, start)) {
+        //     Reservation reservation = new Reservation(fileLoader.findMember(memberID),
+        //             fileLoader.findFacility(facility), date, start, end, "Booked");
+        //     reservationRecord.addRecord(reservation);
+        //     reservationRecord.writeRecord();
+        // }
 
         Main.getScenes().put("RESERVATION", new ReservationView(stage).getScene());
         Main.getScenes().put("MAKE_RESERVATION", new MakeReservationView(stage).getScene());

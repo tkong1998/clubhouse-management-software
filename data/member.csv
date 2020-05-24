@@ -1,4 +1,4 @@
-member_id,name,address,email,phone
+member_id, name, address, email, phone
 member001, Member NO.1, 1/F HandShake Park, member01@handshake.com, 39905678
 member002, Member NO.2, 2/F HandShake Park, member02@handshake.com, 39906789
 member003, Member NO.3, 3/F HandShake Park, member03@handshake.com, 39907890
