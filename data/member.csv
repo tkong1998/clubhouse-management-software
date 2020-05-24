@@ -1,4 +1,5 @@
 member_id, name, address, email, phone
-member001, Member NO.1, 1/F HandShake Park, member01@handshake.com, 39905678
-member002, Member NO.2, 2/F HandShake Park, member02@handshake.com, 39906789
-member003, Member NO.3, 3/F HandShake Park, member03@handshake.com, 39907890
+member001, ONE Member, 1/F HandShake Park, member01@handshake.com, 39905678
+member002, TWO Member, 2/F HandShake Park, member02@handshake.com, 39906789
+member003, THREE Member, 3/F HandShake Park, member03@handshake.com, 39907890
+member004, FOUR Member, 3/F HandShake Park, member04@handshake.com, 39907891

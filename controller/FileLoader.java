@@ -175,18 +175,25 @@ public class FileLoader {
     }
 
     public boolean isValid(Member member, Facility facility, LocalDate date, LocalTime start) {
+        if (date.equals(LocalDate.now()) && start.isBefore(LocalTime.now())){
+            return false;
+        }
         LocalTime end = start.plus(facility.getDuration());
+        int count = 0;
         for (Reservation reservation : reservationList) {
-            int count = 0;
+            if(reservation.getStatus().equals("Cancelled")) {
+                continue;
+            }
             if (reservation.getDate().equals(date)) {
-                if ((start.isAfter(reservation.getStart()) && start.isBefore(reservation.getEnd()))
-                        || (end.isAfter(reservation.getStart()) && end.isBefore(reservation.getEnd()))) {
+                if ((!start.isBefore(reservation.getStart()) && !start.isAfter(reservation.getEnd()))
+                        || (!end.isBefore(reservation.getStart()) && !end.isAfter(reservation.getEnd()))) {
                     if (reservation.getMember().equals(member)) {
                         return false;
                     }
                     if (reservation.getFacility().equals(facility)) {
-                        count++;
-                        if (count > reservation.getFacility().getCapacity()){
+                        count += 1;
+                        System.out.println(reservation.getMember().getName());
+                        if (count >= reservation.getFacility().getCapacity()){
                             return false;
                         }
                     }
@@ -199,7 +206,7 @@ public class FileLoader {
     public void writeRecords() {
         try {
             FileWriter file = new FileWriter(RESERVATION_PATH);
-            file.write("member_id,booked_facility,date,start_time,end_time,status\n");
+            file.write("member_id, booked_facility, date, start_time, end_time, status\n");
             for (Reservation reservation : reservationList) {
                 file.write(reservation.getMember().getId() + ", ");
                 file.write(reservation.getFacility().getFacility() + ", ");

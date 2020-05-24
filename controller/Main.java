@@ -17,7 +17,9 @@ public class Main extends Application {
 		scenes.put("SIGNIN", new SigninView(stage).getScene());
 		scenes.put("STAFF_NAVIGATION", new StaffNavigationView(stage).getScene());
 		scenes.put("MANAGER_NAVIGATION", new ManagerNavigotionView(stage).getScene());
-        scenes.put("RESERVATION", new ReservationView(stage).getScene());
+		scenes.put("RESERVATION", new ReservationView(stage).getScene());
+		scenes.put("MAKE_RESERVATION", new MakeReservationView(stage).getScene());
+		scenes.put("VIEW_RESERVATION", new ViewReservationsView(stage).getScene());
         scenes.put("USAGE", new ViewUsageView(stage).getScene());
 		
 		stage.setScene(scenes.get("SIGNIN"));
