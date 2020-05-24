@@ -23,7 +23,7 @@ public class Main extends Application {
 		scenes.put("TOP3", new ViewTop3View(stage).getScene());
         scenes.put("USAGE", new ViewUsageView(stage).getScene());
 		
-		stage.setScene(scenes.get("TOP3"));
+		stage.setScene(scenes.get("USAGE"));
 		stage.setTitle("HandShake Club House");
 		stage.show();
 	}
