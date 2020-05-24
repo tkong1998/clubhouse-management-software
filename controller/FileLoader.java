@@ -1,13 +1,8 @@
 package controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.*;
+import java.time.*;
+import java.util.*;
 
 public class FileLoader {
     private final String FACILITY_PATH = "data/facility.csv";
@@ -175,13 +170,13 @@ public class FileLoader {
     }
 
     public boolean isValid(Member member, Facility facility, LocalDate date, LocalTime start) {
-        if (date.equals(LocalDate.now()) && start.isBefore(LocalTime.now())){
+        if (date.equals(LocalDate.now()) && start.isBefore(LocalTime.now())) {
             return false;
         }
         LocalTime end = start.plus(facility.getDuration());
         int count = 0;
         for (Reservation reservation : reservationList) {
-            if(reservation.getStatus().equals("Cancelled")) {
+            if (reservation.getStatus().equals("Cancelled")) {
                 continue;
             }
             if (reservation.getDate().equals(date)) {
@@ -192,7 +187,7 @@ public class FileLoader {
                     }
                     if (reservation.getFacility().equals(facility)) {
                         count += 1;
-                        if (count >= reservation.getFacility().getCapacity()){
+                        if (count >= reservation.getFacility().getCapacity()) {
                             return false;
                         }
                     }
@@ -200,6 +195,38 @@ public class FileLoader {
             }
         }
         return true;
+    }
+
+    public PriorityQueue<Map.Entry<Facility, Map<String, Integer>>> getThreeMostPopularFacility() {
+        Map<Facility, Map<String, Integer>> mp = new HashMap<>();
+        for (Reservation reservation : this.reservationList) {
+            if (mp.containsKey(reservation.getFacility())) {
+                Map<String, Integer> info = mp.get(reservation.getFacility());
+                info.put("Total", info.get("Total") + 1);
+                info.put(reservation.getStatus(), info.get(reservation.getStatus()) + 1);
+                mp.put(reservation.getFacility(), info);
+            } else {
+                Map<String, Integer> info = new HashMap<>();
+                info.put("Total", 1);
+                info.put("Booked", 0);
+                info.put("Cancelled", 0);
+                info.put("Checked In", 0);
+                info.put("Checked Out", 0);
+                info.put("Late", 0);
+                info.put("No Show", 0);
+                info.put(reservation.getStatus(), 1);
+                mp.put(reservation.getFacility(), info);
+            }
+        }
+        PriorityQueue<Map.Entry<Facility, Map<String, Integer>>> queue = new PriorityQueue<>(
+                Comparator.comparing(e -> e.getValue().get("Total")));
+        for (Map.Entry<Facility, Map<String, Integer>> facility : mp.entrySet()) {
+            queue.add(facility);
+            if (queue.size() > 3) {
+                queue.poll();
+            }
+        }
+        return queue;
     }
 
     public void writeRecords() {

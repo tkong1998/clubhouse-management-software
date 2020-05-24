@@ -2,6 +2,7 @@ package controller;
 
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import view.*;
 
 public class NavigationController {
   private Stage stage;
@@ -23,7 +24,8 @@ public class NavigationController {
   }
 
   public void viewPopularFacility(MouseEvent event) {
-    stage.setScene(Main.getScenes().get("MANAGER_NAVIGATION"));
+    Main.getScenes().put("TOP3", new ViewTop3View(stage).getScene());
+    stage.setScene(Main.getScenes().get("TOP3"));
   }
 
   public void viewUtilizationRate(MouseEvent event) {
