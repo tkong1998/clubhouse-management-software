@@ -59,7 +59,7 @@ public class MakeReservationView extends MainView implements ViewMaker {
                     @Override
                     public void updateItem(LocalDate date, boolean empty) {
                         super.updateItem(date, empty);
-                        if (date.isBefore(LocalDate.now().plusDays(1))) {
+                        if (date.isBefore(LocalDate.now())) {
                             setDisable(true);
                             setStyle("-fx-background-color: #bfbfbf;");
                         }
@@ -75,7 +75,7 @@ public class MakeReservationView extends MainView implements ViewMaker {
 
         ComboBox<String> startComboBox = new ComboBox<String>();
         grid.add(startComboBox, 1, 4);
-        startComboBox.setOnMousePressed(e -> controller.updateTimeBox(e, facilityComboBox, startComboBox));
+        startComboBox.setOnMousePressed(e -> controller.updateTimeBox(e, facilityComboBox, startComboBox, datePicker));
 
         Label message = new Label();
         message.setTextFill(Color.RED);

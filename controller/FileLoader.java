@@ -175,6 +175,9 @@ public class FileLoader {
     }
 
     public boolean isValid(Member member, Facility facility, LocalDate date, LocalTime start) {
+        if (date.equals(LocalDate.now()) && start.isBefore(LocalTime.now())){
+            return false;
+        }
         LocalTime end = start.plus(facility.getDuration());
         for (Reservation reservation : reservationList) {
             int count = 0;
