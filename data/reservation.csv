@@ -1,3 +1,5 @@
 member_id, booked_facility, date, start_time, end_time, status
-member003, Swimming Pool, 2020-06-06, 15:30, 18:30, Cancelled
-member001, Swimming Pool, 2020-05-27, 11:30, 14:30, Booked
+member004, BBQ Site, 2020-05-24, 12:00, 15:00, No Show
+member001, BBQ Site, 2020-05-25, 12:00, 15:00, Booked
+member002, BBQ Site, 2020-05-25, 12:00, 15:00, Booked
+member003, BBQ Site, 2020-05-25, 12:30, 15:30, Booked
