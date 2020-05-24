@@ -104,6 +104,14 @@ public class FileLoader {
                         LocalTime end = LocalTime.parse(lineData[4].trim());
                         String status = lineData[5].trim();
 
+                        if (date.isBefore(LocalDate.now())
+                                || (date.equals(LocalDate.now()) && end.isBefore(LocalTime.now()))) {
+                            status = "No Show";
+                        } else if ((date.equals(LocalDate.now()) && start.isBefore(LocalTime.now())
+                                && end.isAfter(LocalTime.now()))) {
+                            status = "Late";
+                        }
+
                         Reservation reservation = new Reservation(member, facility, date, start, end, status);
                         reservationList.add(reservation);
 
@@ -125,6 +133,7 @@ public class FileLoader {
                 exception.getStackTrace();
             }
         }
+        writeRecords();
     }
 
     public Member findMember(String id) {
@@ -165,6 +174,28 @@ public class FileLoader {
         return this.managerList;
     }
 
+    public boolean isValid(Member member, Facility facility, LocalDate date, LocalTime start) {
+        LocalTime end = start.plus(facility.getDuration());
+        for (Reservation reservation : reservationList) {
+            int count = 0;
+            if (reservation.getDate().equals(date)) {
+                if ((start.isAfter(reservation.getStart()) && start.isBefore(reservation.getEnd()))
+                        || (end.isAfter(reservation.getStart()) && end.isBefore(reservation.getEnd()))) {
+                    if (reservation.getMember().equals(member)) {
+                        return false;
+                    }
+                    if (reservation.getFacility().equals(facility)) {
+                        count++;
+                        if (count > reservation.getFacility().getCapacity()){
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     public void writeRecords() {
         try {
             FileWriter file = new FileWriter(RESERVATION_PATH);
@@ -178,7 +209,6 @@ public class FileLoader {
                 file.write(reservation.getStatus() + "\n");
             }
             file.close();
-            System.out.println("Write success to " + RESERVATION_PATH);
         } catch (Exception e) {
             e.getStackTrace();
         }
