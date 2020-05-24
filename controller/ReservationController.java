@@ -9,6 +9,7 @@ import javafx.beans.property.*;
 import javafx.collections.*;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ReservationController {
@@ -23,7 +24,13 @@ public class ReservationController {
 
     public TableView<Reservation> makeTable() {
         ArrayList<Reservation> reservations = fileLoader.getReservations();
-        ObservableList<Reservation> list = FXCollections.observableArrayList(reservations);
+        ObservableList<Reservation> list = FXCollections.observableArrayList();
+        for (Reservation reservation : reservations) {
+            if (reservation.getDate().isBefore(LocalDate.now()) || (reservation.getStatus().equals("Checked Out"))) {
+                continue;
+            }
+            list.add(reservation);
+        }
 
         TableView<Reservation> table = new TableView<>();
         TableColumn<Reservation, String> memberCol = new TableColumn<Reservation, String>("Member");
@@ -55,6 +62,7 @@ public class ReservationController {
             list.add(member.getId());
         }
         ComboBox<String> memberBox = new ComboBox<String>();
+        memberBox.setPromptText("Select a member");
         memberBox.getItems().addAll(list);
         return memberBox;
     }
@@ -66,6 +74,7 @@ public class ReservationController {
             list.add(facility.getFacility());
         }
         ComboBox<String> facilityBox = new ComboBox<String>();
+        facilityBox.setPromptText("Select a facility");
         facilityBox.getItems().addAll(list);
         return facilityBox;
     }
@@ -75,6 +84,7 @@ public class ReservationController {
         Facility facility = fileLoader.findFacility(facilityName);
         LocalTime start = facility.getStartHour();
         LocalTime end = facility.getCloseHour();
+
         ObservableList<String> list = FXCollections.observableArrayList();
         for (LocalTime time = start; !time.equals(end.minus(facility.getDuration())); time = time.plusMinutes(30)) {
             list.add(time.toString());
@@ -103,6 +113,7 @@ public class ReservationController {
             Reservation reservation = table.getSelectionModel().getSelectedItem();
             if (reservation.getStatus().equals("Checked In")) {
                 reservation.setStatus("Checked Out");
+                table.getItems().remove(reservation);
             }
             System.out.println(reservation.getStatus());
         }
@@ -118,30 +129,32 @@ public class ReservationController {
         }
     }
 
-    // TODO: Finish make reservation
     public void makeReservation(MouseEvent event, ComboBox<String> memberComboBox, ComboBox<String> facilityComboBox,
-            DatePicker datePicker, ComboBox<String> startComboBox) {
+            DatePicker datePicker, ComboBox<String> startComboBox, Label message) {
         if (memberComboBox.getValue() == null || facilityComboBox.getValue() == null || datePicker.getValue() == null
                 || startComboBox.getValue() == null) {
-            System.out.println("Cannot be null");
+            message.setText("Invalid reservation, please check again.");
+
             return;
         }
 
-        // String memberID = memberComboBox.getValue();
-        // String facility = facilityComboBox.getValue();
-        // LocalDate date = datePicker.getValue();
-        // LocalTime start = LocalTime.parse(startComboBox.getValue());
-        // LocalTime end = start.plus(fileLoader.findFacility(facility).getDuration());
-        // if (reservationRecord.isAvailable(memberID, facility, date, start)) {
-        //     Reservation reservation = new Reservation(fileLoader.findMember(memberID),
-        //             fileLoader.findFacility(facility), date, start, end, "Booked");
-        //     reservationRecord.addRecord(reservation);
-        //     reservationRecord.writeRecord();
-        // }
+        Member member = fileLoader.findMember(memberComboBox.getValue());
+        Facility facility = fileLoader.findFacility(facilityComboBox.getValue());
+        LocalDate date = datePicker.getValue();
+        LocalTime start = LocalTime.parse(startComboBox.getValue());
+        LocalTime end = start.plus(facility.getDuration());
 
-        Main.getScenes().put("RESERVATION", new ReservationView(stage).getScene());
-        Main.getScenes().put("MAKE_RESERVATION", new MakeReservationView(stage).getScene());
-        stage.setScene(Main.getScenes().get("RESERVATION"));
+        if (fileLoader.isValid(member, facility, date, start)) {
+            Reservation reservation = new Reservation(member, facility, date, start, end, "Booked");
+            fileLoader.getReservations().add(reservation);
+            fileLoader.writeRecords();
+            Main.getScenes().put("RESERVATION", new ReservationView(stage).getScene());
+            Main.getScenes().put("MAKE_RESERVATION", new MakeReservationView(stage).getScene());
+            stage.setScene(Main.getScenes().get("RESERVATION"));
+        } else {
+            message.setText("Invalid reservation, please check again.");
+            return;
+        }
     }
 
     public void cancel(MouseEvent event) {

@@ -7,6 +7,7 @@ import controller.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.*;
 import javafx.util.Callback;
 import javafx.scene.control.*;
@@ -72,13 +73,18 @@ public class MakeReservationView extends MainView implements ViewMaker {
         Label startLabel = new Label("Start:");
         grid.add(startLabel, 0, 4);
 
-        ComboBox<String> startComboBox = new ComboBox<>();
+        ComboBox<String> startComboBox = new ComboBox<String>();
         grid.add(startComboBox, 1, 4);
-
         startComboBox.setOnMousePressed(e -> controller.updateTimeBox(e, facilityComboBox, startComboBox));
 
+        Label message = new Label();
+        message.setTextFill(Color.RED);
+        message.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+        grid.add(message, 0, 5, 2, 1);
+
         Button submitBtn = new Button("Sumbit");
-        submitBtn.setOnMousePressed(e -> controller.makeReservation(e, memberComboBox, facilityComboBox, datePicker,startComboBox));
+        submitBtn.setOnMousePressed(
+                e -> controller.makeReservation(e, memberComboBox, facilityComboBox, datePicker, startComboBox, message));
 
         Button cancelBtn = new Button("Cancel");
         cancelBtn.setOnMousePressed(e -> controller.cancel(e));
@@ -93,8 +99,8 @@ public class MakeReservationView extends MainView implements ViewMaker {
 
         HBox btnBox = new HBox(5);
         btnBox.setAlignment(Pos.CENTER);
-        btnBox.getChildren().addAll(submitBtn,cancelBtn,closeBtn);
-        grid.add(btnBox,0,6,2,1);
+        btnBox.getChildren().addAll(submitBtn, cancelBtn, closeBtn);
+        grid.add(btnBox, 0, 6, 2, 1);
 
         BorderPane root = super.getRoot();
         root.setCenter(grid);
