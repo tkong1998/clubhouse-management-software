@@ -160,4 +160,16 @@ public class ReservationController {
         Main.getScenes().put("MAKE_RESERVATION", new MakeReservationView(stage).getScene());
         stage.setScene(Main.getScenes().get("RESERVATION"));
     }
+
+	public void cancelBooking(MouseEvent e, TableView<Reservation> table) {
+		if (table.getSelectionModel().getSelectedItem() != null) {
+            Reservation reservation = table.getSelectionModel().getSelectedItem();
+            if (reservation.getStatus().equals("Booked")) {
+                reservation.setStatus("Cancelled");
+            }
+            System.out.println(reservation.getStatus());
+        }
+        table.refresh();
+        fileLoader.writeRecords();
+	}
 }
