@@ -18,7 +18,6 @@ public class SigninController {
 	private final String path = "data/staff.csv";
 	private static Staff staff;
 
-	/** Inject the stage from {@link Main} */
 	public SigninController(Stage stage) {
 		this.stage = stage;
 	}
