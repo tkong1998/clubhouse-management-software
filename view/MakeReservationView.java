@@ -14,7 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 
-public class MakeReservationView extends MainView implements ViewMaker {
+public class MakeReservationView extends MainView {
     private Stage stage;
 
     public MakeReservationView(Stage stage) {
@@ -22,7 +22,6 @@ public class MakeReservationView extends MainView implements ViewMaker {
         this.stage = stage;
     }
 
-    @Override
     public Scene getScene() {
         ReservationController controller = new ReservationController(stage);
         GridPane grid = new GridPane();

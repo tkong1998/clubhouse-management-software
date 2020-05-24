@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-public class SigninView extends MainView implements ViewMaker {
+public class SigninView extends MainView {
 	
 	private Stage stage;
 	
@@ -19,7 +19,7 @@ public class SigninView extends MainView implements ViewMaker {
 		this.stage = stage;
 	}
 
-	@Override
+	
 	public Scene getScene() {
 		// Inject stage from Main into controller
 		SigninController controller = new SigninController(stage);

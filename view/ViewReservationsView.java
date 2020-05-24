@@ -8,7 +8,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-public class ViewReservationsView extends MainView implements ViewMaker {
+public class ViewReservationsView extends MainView {
 
     private Stage stage;
 
@@ -17,7 +17,6 @@ public class ViewReservationsView extends MainView implements ViewMaker {
         this.stage = stage;
     }
 
-    @Override
     public Scene getScene() {
         ReservationController controller = new ReservationController(stage);
 

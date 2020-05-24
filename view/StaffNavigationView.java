@@ -8,7 +8,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-public class StaffNavigationView extends MainView implements ViewMaker{
+public class StaffNavigationView extends MainView {
 
     private Stage stage;
 
@@ -17,7 +17,7 @@ public class StaffNavigationView extends MainView implements ViewMaker{
         this.stage = stage;
     }
 
-    @Override
+
     public Scene getScene() {
         NavigationController controller = new NavigationController(stage);
         

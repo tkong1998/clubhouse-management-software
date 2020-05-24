@@ -8,7 +8,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-public class ViewUsageView extends MainView implements ViewMaker{
+public class ViewUsageView extends MainView {
 
     private Stage stage;
 
@@ -17,7 +17,6 @@ public class ViewUsageView extends MainView implements ViewMaker{
         this.stage = stage;
     }
 
-    @Override
     public Scene getScene() {
         ViewUsageController controller = new ViewUsageController(stage);
         
