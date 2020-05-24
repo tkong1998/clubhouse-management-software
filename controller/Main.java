@@ -1,10 +1,6 @@
 package controller;
 
-import view.ManagerNavigotionView;
-import view.StaffNavigationView;
-import view.ReservationView;
-import view.SigninView;
-import view.ViewUsageView;
+import view.*;
 
 import java.util.HashMap;
 import java.util.Map;
