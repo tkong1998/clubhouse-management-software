@@ -23,7 +23,6 @@ public class SigninController {
 	}
 
 	public static Staff getStaff() {
-		System.out.println(staff.getClass());
 		return SigninController.staff;
 
 	}

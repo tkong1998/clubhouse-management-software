@@ -124,7 +124,6 @@ public class ReservationController {
             if (reservation.getStatus().equals("Booked")) {
                 reservation.setStatus("Checked In");
             }
-            System.out.println(reservation.getStatus());
         }
         table.refresh();
         fileLoader.writeRecords();
@@ -137,7 +136,6 @@ public class ReservationController {
                 reservation.setStatus("Checked Out");
                 table.getItems().remove(reservation);
             }
-            System.out.println(reservation.getStatus());
         }
         table.refresh();
         fileLoader.writeRecords();
@@ -149,7 +147,6 @@ public class ReservationController {
             if (reservation.getStatus().equals("Booked")) {
                 reservation.setStatus("Cancelled");
             }
-            System.out.println(reservation.getStatus());
         }
         table.refresh();
         fileLoader.writeRecords();

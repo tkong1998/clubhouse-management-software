@@ -19,7 +19,7 @@ public class NavigationController {
   }
 
   public void viewReservation(MouseEvent event) {
-    stage.setScene(Main.getScenes().get("MANAGER_NAVIGATION"));
+    stage.setScene(Main.getScenes().get("VIEW_RESERVATION"));
   }
 
   public void viewPopularFacility(MouseEvent event) {

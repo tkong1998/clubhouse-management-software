@@ -192,7 +192,6 @@ public class FileLoader {
                     }
                     if (reservation.getFacility().equals(facility)) {
                         count += 1;
-                        System.out.println(reservation.getMember().getName());
                         if (count >= reservation.getFacility().getCapacity()){
                             return false;
                         }
