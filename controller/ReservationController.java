@@ -39,7 +39,7 @@ public class ReservationController {
         TableColumn<Reservation, String> endCol = new TableColumn<Reservation, String>("End Time");
         TableColumn<Reservation, String> statusCol = new TableColumn<Reservation, String>("Status");
 
-        memberCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getMember().getMemberID()));
+        memberCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getMember().getId()));
         facilityCol
                 .setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getFacility().getFacility()));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -58,7 +58,7 @@ public class ReservationController {
         ArrayList<Member> members = memberList.getMemberList();
         ObservableList<String> list = FXCollections.observableArrayList();
         for (Member member : members) {
-            list.add(member.getMemberID());
+            list.add(member.getId());
         }
         ComboBox<String> memberBox = new ComboBox<String>();
         memberBox.getItems().addAll(list);
@@ -117,16 +117,18 @@ public class ReservationController {
     }
 
     public void back(MouseEvent event) {
-        if (SigninController.getStaff().getRole().equals("staff")) {
-            stage.setScene(Main.getScenes().get("STAFF_NAVIGATION"));
-        } else if (SigninController.getStaff().getRole().equals("manager")) {
+        if (SigninController.getStaff() instanceof Manager) {
             stage.setScene(Main.getScenes().get("MANAGER_NAVIGATION"));
+        } else if (SigninController.getStaff() instanceof Staff) {
+            stage.setScene(Main.getScenes().get("STAFF_NAVIGATION"));
         }
     }
 
     // TODO: Finish make reservation
-    public void makeReservation(MouseEvent event, ComboBox<String> memberComboBox, ComboBox<String> facilityComboBox, DatePicker datePicker, ComboBox<String> startComboBox) {
-        if (memberComboBox.getValue() == null || facilityComboBox.getValue() == null || datePicker.getValue() == null || startComboBox.getValue() == null) {
+    public void makeReservation(MouseEvent event, ComboBox<String> memberComboBox, ComboBox<String> facilityComboBox,
+            DatePicker datePicker, ComboBox<String> startComboBox) {
+        if (memberComboBox.getValue() == null || facilityComboBox.getValue() == null || datePicker.getValue() == null
+                || startComboBox.getValue() == null) {
             System.out.println("Cannot be null");
             return;
         }
@@ -136,8 +138,9 @@ public class ReservationController {
         LocalDate date = datePicker.getValue();
         LocalTime start = LocalTime.parse(startComboBox.getValue());
         LocalTime end = start.plus(facilityList.findFacility(facility).getDuration());
-        if (reservationRecord.isAvailable(memberID, facility, date, start)){
-            Reservation reservation = new Reservation(memberList.findMember(memberID), facilityList.findFacility(facility), date, start, end, "Booked");
+        if (reservationRecord.isAvailable(memberID, facility, date, start)) {
+            Reservation reservation = new Reservation(memberList.findMember(memberID),
+                    facilityList.findFacility(facility), date, start, end, "Booked");
             reservationRecord.addRecord(reservation);
             reservationRecord.writeRecord();
         }

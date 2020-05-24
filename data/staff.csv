@@ -1,4 +1,4 @@
-staff_id,name,email,password,role
-staff001,staff_test_01,staff01@handshake.com,staff_test01,staff
-staff002,staff_test_02,staff01@handshake.com,staff_test02,staff
-staff003,manager_test,staff01@handshake.com,manager_test,manager
+staff_id, name, password, role
+staff001, staff_test_01, staff_test01, staff
+staff002, staff_test_02, staff_test02, staff
+staff003, manager_test, manager_test, manager

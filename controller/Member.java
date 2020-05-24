@@ -1,19 +1,19 @@
 package controller;
 
 public class Member extends User{
-    private String memberID;
+    private String email;
     private String address;
     private String phone;
 
-    public Member(String name, String email, String memberID, String address, String phone){
-        super(name,"",email);
-        this.memberID = memberID;
+    public Member(String name, String id, String email, String address, String phone){
+        super(name,"",id);
+        this.email = email;
         this.address = address;
         this.phone = phone;
     }
 
-    public String getMemberID(){
-        return this.memberID;
+    public String getEmail(){
+        return this.email;
     }
 
     public String getAddress(){

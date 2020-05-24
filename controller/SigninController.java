@@ -1,4 +1,5 @@
 package controller;
+
 import view.*;
 
 import java.util.*;
@@ -9,21 +10,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
 
-
 public class SigninController {
 
 	private Stage stage;
 	private ArrayList<Staff> staffList = new ArrayList<Staff>();
-	private String path = "data/staff.csv";
+	private ArrayList<Manager> managerList = new ArrayList<Manager>();
+	private final String path = "data/staff.csv";
 	private static Staff staff;
-	
+
 	/** Inject the stage from {@link Main} */
 	public SigninController(Stage stage) {
 		this.stage = stage;
 	}
 
-	public static Staff getStaff(){
+	public static Staff getStaff() {
+		System.out.println(staff.getClass());
 		return SigninController.staff;
+
 	}
 
 	private void loadStaff(){
@@ -47,12 +50,14 @@ public class SigninController {
 					lineData = line.split(",");
 					String staffID = lineData[0].trim();
 					String name = lineData[1].trim();
-					String email = lineData[2].trim();
-					String password = lineData[3].trim();
-					String role = lineData[4].trim();
-			
-					Staff staff = new Staff(staffID,name,password,email,role);
-					staffList.add(staff);
+					String password = lineData[2].trim();
+					String role = lineData[3].trim();
+					
+					if (role.equals("staff")){
+						staffList.add(new Staff(name, staffID, password));
+					} else if (role.equals("manager")) {
+						managerList.add(new Manager(name, staffID, password));
+					}
 				}
 			}
 			input.close();
@@ -61,10 +66,16 @@ public class SigninController {
 		}
 		
 	}
-	private Staff searchStaff(String name){
-		for (Staff staff: this.staffList){
-			if (staff.getName().equals(name) || staff.getStaffID().equals(name)) {
+
+	private Staff searchStaff(String name) {
+		for (Staff staff : this.staffList) {
+			if (staff.getName().equals(name) || staff.getId().equals(name)) {
 				return staff;
+			}
+		}
+		for (Manager manager : this.managerList){
+			if (manager.getName().equals(name) || manager.getId().equals(name)){
+				return manager;
 			}
 		}
 		return null;
@@ -79,26 +90,24 @@ public class SigninController {
 			message.setText("User does NOT exist!");
 			return;
 		}
-		String staffPwd = staff.getPassword();
-		String staffRole = staff.getRole();
-
-		if (!staffPwd.equals(pwd)){
+		String password = staff.getPassword();
+		if (!password.equals(pwd)) {
 			message.setText("Password does NOT match!");
 			return;
 		}
-		if (staffRole.equals("staff")) {
-			message.setText("");
-			stage.setScene(Main.getScenes().get("STAFF_NAVIGATION"));
-		} else if (staffRole.equals("manager")) {
+		if (staff instanceof Manager) {
 			message.setText("");
 			stage.setScene(Main.getScenes().get("MANAGER_NAVIGATION"));
+		} else if (staff instanceof Staff) {
+			message.setText("");
+			stage.setScene(Main.getScenes().get("STAFF_NAVIGATION"));
 		} else {
 			message.setText("You have no authority to login to this system");
 		}
 		Main.getScenes().put("SIGNIN", new SigninView(stage).getScene());
 	}
 
-	public static void signout(){
+	public static void signout() {
 		SigninController.staff = null;
 	}
 
