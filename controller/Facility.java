@@ -1,7 +1,6 @@
 package controller;
 
 import java.time.*;
-import java.util.ArrayList;
 
 public class Facility {
     private String name;
@@ -11,50 +10,43 @@ public class Facility {
     private int capacity;
     private Duration sessionDuration;
     private String description;
-    private ArrayList<Reservation> reservations = new ArrayList<Reservation>();
 
-    public Facility(String name, double rent, LocalTime oh, LocalTime ch, int cap, Duration duration, String description){
+    public Facility(String name, double rent, LocalTime openHour, LocalTime closeHour, int capacity, Duration duration,
+            String description) {
         this.name = name;
         this.rent = rent;
-        this.openHour = oh;
-        this.closeHour = ch;
-        this.capacity = cap;
+        this.openHour = openHour;
+        this.closeHour = closeHour;
+        this.capacity = capacity;
         this.sessionDuration = duration;
         this.description = description;
     }
 
-    public String getFacility(){
+    public String getFacility() {
         return this.name;
     }
 
-    public double getRent(){
+    public double getRent() {
         return this.rent;
     }
 
-    public LocalTime getStartHour(){
+    public LocalTime getStartHour() {
         return this.openHour;
     }
 
-    public LocalTime getCloseHour(){
+    public LocalTime getCloseHour() {
         return this.closeHour;
     }
 
-    public int getCapacity(){
+    public int getCapacity() {
         return this.capacity;
     }
-    public Duration getDuration(){
+
+    public Duration getDuration() {
         return this.sessionDuration;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return this.description;
-    }
-
-    public ArrayList<Reservation> getReservations(){
-        return this.reservations;
-    }
-
-    public void addReservation(Reservation reservation){
-        this.reservations.add(reservation);
     }
 }

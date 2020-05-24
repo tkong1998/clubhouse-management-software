@@ -11,10 +11,10 @@ public class ViewUsageController {
     }
 
     public void back(MouseEvent event){
-      if (SigninController.getStaff().getRole().equals("staff")){
-        stage.setScene(Main.getScenes().get("STAFF_NAVIGATION"));
-    } else if (SigninController.getStaff().getRole().equals("manager")){
+      if (SigninController.getStaff() instanceof Manager){
         stage.setScene(Main.getScenes().get("MANAGER_NAVIGATION"));
+    } else if (SigninController.getStaff() instanceof Staff){
+        stage.setScene(Main.getScenes().get("STAFF_NAVIGATION"));
     }
     }
 }

@@ -1,7 +1,6 @@
 package view;
 
-import controller.Reservation;
-import controller.ReservationController;
+import controller.*;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -25,16 +24,14 @@ public class ReservationView extends MainView implements ViewMaker{
         Text sceneTitle = new Text("Manage Reservations");
         sceneTitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
         
-        // TODO: Add reservation information
-        Text label = new Text("Remember to deploy a table");
-        TableView<Reservation> reservations = new TableView<Reservation>();
+        TableView<Reservation> reservations = controller.makeTable();
 
         Button makeReservationBtn = new Button("Make Reservation");
-        makeReservationBtn.setOnMousePressed(e -> controller.makeReservation(e));
+        makeReservationBtn.setOnMousePressed(e -> controller.goToMakeReservation(e));
         Button checkinBtn = new Button("Check In");
-        checkinBtn.setOnMousePressed(e -> controller.checkin(e));
+        checkinBtn.setOnMousePressed(e -> controller.checkin(e,reservations));
         Button checkoutBtn = new Button("Check Out");
-        checkoutBtn.setOnMousePressed(e -> controller.checkout(e));
+        checkoutBtn.setOnMousePressed(e -> controller.checkout(e,reservations));
         Button backBtn = new Button("Back");
         backBtn.setOnMousePressed(e -> controller.back(e));
         Button closeBtn = new Button("Close");
@@ -53,7 +50,7 @@ public class ReservationView extends MainView implements ViewMaker{
 
         VBox container = new VBox(10);
         container.setPadding(new Insets(10, 25, 10, 25));
-        container.getChildren().addAll(sceneTitle,label,reservations,btnBar);
+        container.getChildren().addAll(sceneTitle,reservations,btnBar);
 
         BorderPane root = super.getRoot();
         root.setCenter(container);

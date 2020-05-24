@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<style>
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-family: "Poppins", sans-serif
+    }
+
+    body {
+        font-size: 16px;
+    }
+
+    .w3-half img {
+        margin-bottom: -6px;
+        margin-top: 16px;
+        opacity: 1;
+        cursor: pointer
+    }
+</style>
+
+<body>
+
+    <!-- Sidebar/menu -->
+    <nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding"
+        style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+        <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft"
+            style="width:100%;font-size:22px">Close Menu</a>
+        <div class="w3-container">
+            <h3 class="w3-padding-64"><b>HandShake Residence Club House<br>Booking System</b></h3>
+        </div>
+        <div class="w3-bar-block">
+            <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
+            <a href="#project" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About the Project</a>
+            <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Showcase</a>
+            <a href="#developer" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Developer</a>
+            <a href="#methods" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">List of Methods</a>
+        </div>
+    </nav>
+
+    <!-- Top menu on small screens -->
+    <header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+        <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
+        <span>HandShake Residence Club House Booking System</span>
+    </header>
+
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu"
+        id="myOverlay"></div>
+
+    <!-- !PAGE CONTENT! -->
+    <div class="w3-main" style="margin-left:340px;margin-right:40px">
+
+        <!-- Header -->
+        <div class="w3-container" style="margin-top:80px" id="project">
+            <h1 class="w3-jumbo"><b>HandShake Residence Club House Booking System Booking System</b></h1>
+            <h1 class="w3-xxxlarge w3-text-red"><b>About the project.</b></h1>
+            <p>This is the ISOM3320 individual final project done by KONG, Tung (Monique).</p>
+            <p>This is a booking system for the HandShake Residence Club House. Only staff (normal staff and managers)
+                can access to the system (sign in). Everytime a member wants to make a reservation, s/he will call the center
+                through the club house hotline. The staff will help them check the availability of the corresponding
+                facility at the date and time provided by the member. If available, then the reservation is valid. If
+                not, then the reservation is not valid, and the member needs to make another reservation. Staff can also
+                modify the status of each reservation (e.g., Booked, Checked In, Checked Out, or Cancelled) under
+                different circumstances. On top of the normal functions of staff, managers can perform more advanced
+                functions, such as see the list of all reservations, see the 3 most popular facilities, see the
+                utilization rate of each facility.
+            </p>
+            <p>Check out more about the project on my <a
+                    href="https://github.com/tkong1998/clubhouse-management-software.git"
+                    class="w3-hover-opacity">Github repo</a>!</p>
+            <p><b><i>disclaimer</i></b> :</p>
+            <p>This html template is obtain from
+                <a href="https://www.w3schools.com/w3css/w3css_templates.asp" class="w3-hover-opacity">W3School</a>.
+            </p>
+            <hr style="width:50px;border:5px solid red" class="w3-round">
+        </div>
+
+        <!-- Showcase -->
+        <div class="w3-container" id="showcase" style="margin-top:75px">
+            <h1 class="w3-xxxlarge w3-text-red"><b>Showcase.</b></h1>
+            <p>Some screenshots of the software</p>
+            <hr style="width:50px;border:5px solid red" class="w3-round">
+        </div>
+        <!-- Photo grid (modal) -->
+        <div class="w3-row-padding">
+            <div class="w3-half">
+                <img src="/w3images/kitchenconcrete.jpg" style="width:100%" onclick="onClick(this)"
+                    alt="Concrete meets bricks">
+                <img src="/w3images/livingroom.jpg" style="width:100%" onclick="onClick(this)"
+                    alt="Light, white and tight scandinavian design">
+                <img src="/w3images/diningroom.jpg" style="width:100%" onclick="onClick(this)"
+                    alt="White walls with designer chairs">
+            </div>
+
+            <div class="w3-half">
+                <img src="/w3images/atrium.jpg" style="width:100%" onclick="onClick(this)" alt="Windows for the atrium">
+                <img src="/w3images/bedroom.jpg" style="width:100%" onclick="onClick(this)"
+                    alt="Bedroom and office in one space">
+                <img src="/w3images/livingroom2.jpg" style="width:100%" onclick="onClick(this)"
+                    alt="Scandinavian design">
+            </div>
+        </div>
+
+        <!-- Modal for full size images on click-->
+        <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+            <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
+            <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+                <img id="img01" class="w3-image">
+                <p id="caption"></p>
+            </div>
+        </div>
+
+        <!-- Developer -->
+        <div class="w3-container" id="developer" style="margin-top:75px">
+            <h1 class="w3-xxxlarge w3-text-red"><b>Developer.</b></h1>
+            <hr style="width:50px;border:5px solid red" class="w3-round">
+            <h2>KONG, Tung</h2>
+            <div class="w3-half">
+                <img src="/Users/moniquekong/Desktop/Personal/business-pic.jpeg" style="width:90%">
+            </div>
+            <div class="w3-half">
+                <p><b>Hi!</b><br>
+                    My name is Monique KONG. I am a Year-4 student from the Hong Kong University of Science and
+                    Technology, majoring in Computer Science and General Business Management. This reservation system
+                    for the HandShake Residence Club House is my first desktop software developed all from scratch! Hope
+                    you all enjoy exploring it!
+                </p>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <p><b>Email</b>: tkong@connect.ust.hk </p>
+                <p><b>Student ID</b>: 20379081</p>
+            </div>
+        </div>
+
+        <!-- Methods -->
+        <div class="w3-container" id="methods" style="margin-top:75px">
+            <h1 class="w3-xxxlarge w3-text-red"><b>List of Methods.</b></h1>
+            <hr style="width:50px;border:5px solid red" class="w3-round">
+            <p>The following is a list of methods implemented in this sotfwar./</p>
+            <form action="/action_page.php" target="_blank">
+                <div class="w3-section">
+                    <label>Name</label>
+                    <input class="w3-input w3-border" type="text" name="Name" required>
+                </div>
+                <div class="w3-section">
+                    <label>Email</label>
+                    <input class="w3-input w3-border" type="text" name="Email" required>
+                </div>
+                <div class="w3-section">
+                    <label>Message</label>
+                    <input class="w3-input w3-border" type="text" name="Message" required>
+                </div>
+                <button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom">Send
+                    Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- W3.CSS Container -->
+    <div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px">
+        <p class="w3-right">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS"
+                target="_blank" class="w3-hover-opacity">w3.css</a></p>
+    </div>
+
+    <script>
+        // Script to open and close sidebar
+        function w3_open() {
+            document.getElementById("mySidebar").style.display = "block";
+            document.getElementById("myOverlay").style.display = "block";
+        }
+
+        function w3_close() {
+            document.getElementById("mySidebar").style.display = "none";
+            document.getElementById("myOverlay").style.display = "none";
+        }
+
+        // Modal Image Gallery
+        function onClick(element) {
+            document.getElementById("img01").src = element.src;
+            document.getElementById("modal01").style.display = "block";
+            var captionText = document.getElementById("caption");
+            captionText.innerHTML = element.alt;
+        }
+    </script>
+
+</body>
+
+</html>

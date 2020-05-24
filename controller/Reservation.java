@@ -3,27 +3,26 @@ package controller;
 import java.time.*;
 
 public class Reservation {
-    private Member memberID;
+    private Member member;
     private Facility facility;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
-    private Duration duration;
+    private long duration;
     private String status;
 
-    public Reservation(Member memberID, Facility facility, LocalDate date, LocalTime start, LocalTime end, String status){
-        this.memberID = memberID;
+    public Reservation(Member member, Facility facility, LocalDate date, LocalTime start, LocalTime end, String status){
+        this.member = member;
         this.facility = facility;
         this.date = date;
         this.startTime = start;
         this.endTime = end;
         this.status = status;
-
-        this.duration = Duration.between(this.startTime,this.endTime);
+        this.duration = Duration.between(this.startTime,this.endTime).toMinutes();
     }
 
     public Member getMember(){
-        return this.memberID;
+        return this.member;
     }
 
     public Facility getFacility(){
@@ -42,7 +41,7 @@ public class Reservation {
         return this.endTime;
     }
 
-    public Duration getDuration(){
+    public long getDuration(){
         return this.duration;
     }
 

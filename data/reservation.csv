@@ -1,1 +1,2 @@
-member_id,booked_facility,date,start_time,end_time,duration,status
+member_id,booked_facility,date,start_time,end_time,status
+member003, Swimming Pool, 2020-06-06, 15:30, 18:30, Booked

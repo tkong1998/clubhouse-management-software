@@ -50,6 +50,7 @@ public class SigninView extends MainView implements ViewMaker {
         grid.add(pwdField, 1, 3);
 
         Label message = new Label();
+        message.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
         message.setTextFill(Color.RED);
         grid.add(message,0,4,2,1);
 
