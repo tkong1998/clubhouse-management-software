@@ -1,3 +1,3 @@
-member_id,booked_facility,date,start_time,end_time,status
+member_id, booked_facility, date, start_time, end_time, status
 member003, Swimming Pool, 2020-06-06, 15:30, 18:30, Cancelled
 member001, Swimming Pool, 2020-05-27, 11:30, 14:30, Booked

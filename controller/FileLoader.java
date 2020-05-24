@@ -202,7 +202,7 @@ public class FileLoader {
     public void writeRecords() {
         try {
             FileWriter file = new FileWriter(RESERVATION_PATH);
-            file.write("member_id,booked_facility,date,start_time,end_time,status\n");
+            file.write("member_id, booked_facility, date, start_time, end_time, status\n");
             for (Reservation reservation : reservationList) {
                 file.write(reservation.getMember().getId() + ", ");
                 file.write(reservation.getFacility().getFacility() + ", ");
