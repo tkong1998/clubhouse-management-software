@@ -34,9 +34,6 @@ public class ManagerNavigotionView extends MainView {
         Button viewPopularBtn = new Button("View Top 3 Popular Facility");
         viewPopularBtn.setOnMouseClicked(e -> controller.viewPopularFacility(e));
 
-        Button viewUsageRateBtn = new Button("View Utilization Rate of Facilities");
-        viewUsageRateBtn.setOnMouseClicked(e -> controller.viewUtilizationRate(e));
-
         Button signoutBtn = new Button("Sign Out");
         signoutBtn.setOnMousePressed(e -> controller.signout(e));
 
@@ -48,14 +45,13 @@ public class ManagerNavigotionView extends MainView {
         viewUsageBtn.setMinWidth(btnWidth);
         viewReservationBtn.setMinWidth(btnWidth);
         viewPopularBtn.setMinWidth(btnWidth);
-        viewUsageRateBtn.setMinWidth(btnWidth);
         signoutBtn.setMinWidth(btnWidth);
         closeBtn.setMinWidth(btnWidth);
 
         VBox btnBox = new VBox(10);
         btnBox.setAlignment(Pos.CENTER);
         btnBox.setPadding(new Insets(10, 25, 10, 25));
-        btnBox.getChildren().addAll(sceneTitle,manageReservationBtn,viewUsageBtn,viewReservationBtn,viewPopularBtn,viewUsageRateBtn,signoutBtn,closeBtn);
+        btnBox.getChildren().addAll(sceneTitle,manageReservationBtn,viewUsageBtn,viewReservationBtn,viewPopularBtn,signoutBtn,closeBtn);
         
         BorderPane root = super.getRoot();
         root.setCenter(btnBox);

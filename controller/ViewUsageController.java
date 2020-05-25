@@ -42,7 +42,7 @@ public class ViewUsageController {
       String description = facility.getDescription();
       if (time.isBefore(facility.getStartHour()) || time.isAfter(facility.getCloseHour())) {
         usageStatus = "Close";
-        String[] info = { facility.getFacility(), description, String.valueOf(count), String.valueOf(avail),
+        String[] info = { facility.getFacilityName(), description, String.valueOf(count), String.valueOf(avail),
             String.valueOf(capacity), usageStatus };
         list.add(info);
         continue;
@@ -64,7 +64,7 @@ public class ViewUsageController {
       } else {
         usageStatus = "Available";
       }
-      String[] info = { facility.getFacility(), description, String.valueOf(count), String.valueOf(avail),
+      String[] info = { facility.getFacilityName(), description, String.valueOf(count), String.valueOf(avail),
           String.valueOf(capacity), usageStatus };
       list.add(info);
     }
@@ -82,6 +82,11 @@ public class ViewUsageController {
 
   public void updateTable(TableView<String[]> table, DatePicker datePicker, ComboBox<String> timeComboBox,
       Label message) {
+    
+    if (datePicker == null || timeComboBox == null) {
+      message.setText("Please select a date and the time you would like to check");
+      return;
+    }
     table.getItems().clear();
     table.getItems().addAll(getUsageList(datePicker, timeComboBox, message));
     table.refresh();

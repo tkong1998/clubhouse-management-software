@@ -22,7 +22,7 @@ public class Facility {
         this.description = description;
     }
 
-    public String getFacility() {
+    public String getFacilityName() {
         return this.name;
     }
 

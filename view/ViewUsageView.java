@@ -37,7 +37,6 @@ public class ViewUsageView extends MainView {
                 .plusMinutes(30)) {
             timeComboBox.getItems().add(time.toString());
         }
-        timeComboBox.getSelectionModel().selectFirst();
 
         Label message = new Label();
         message.setTextFill(Color.RED);

@@ -11,45 +11,46 @@ public class Reservation {
     private long duration;
     private String status;
 
-    public Reservation(Member member, Facility facility, LocalDate date, LocalTime start, LocalTime end, String status){
+    public Reservation(Member member, Facility facility, LocalDate date, LocalTime start, LocalTime end,
+            String status) {
         this.member = member;
         this.facility = facility;
         this.date = date;
         this.startTime = start;
         this.endTime = end;
         this.status = status;
-        this.duration = Duration.between(this.startTime,this.endTime).toMinutes();
+        this.duration = Duration.between(this.startTime, this.endTime).toMinutes();
     }
 
-    public Member getMember(){
+    public Member getMember() {
         return this.member;
     }
 
-    public Facility getFacility(){
+    public Facility getFacility() {
         return this.facility;
     }
 
-    public LocalDate getDate(){
+    public LocalDate getDate() {
         return this.date;
     }
 
-    public LocalTime getStart(){
+    public LocalTime getStart() {
         return this.startTime;
     }
 
-    public LocalTime getEnd(){
+    public LocalTime getEnd() {
         return this.endTime;
     }
 
-    public long getDuration(){
+    public long getDuration() {
         return this.duration;
     }
 
-    public String getStatus(){
+    public String getStatus() {
         return this.status;
     }
 
-    public void setStatus(String status){
+    public void setStatus(String status) {
         this.status = status;
     }
 }

@@ -53,8 +53,4 @@ public class StaffNavigationView extends MainView {
         Scene scene = new Scene(root);
         return scene;
     }
-
-    public Stage getStage(){
-        return this.stage;
-    }
 }

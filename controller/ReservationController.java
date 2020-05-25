@@ -47,7 +47,7 @@ public class ReservationController {
 
         memberCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getMember().getName()));
         facilityCol
-                .setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getFacility().getFacility()));
+                .setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getFacility().getFacilityName()));
         dateCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getDate().toString()));
         startCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getStart().toString()));
         endCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEnd().toString()));
@@ -77,7 +77,7 @@ public class ReservationController {
         ArrayList<Facility> facilities = fileLoader.getFacilities();
         ObservableList<String> list = FXCollections.observableArrayList();
         for (Facility facility : facilities) {
-            list.add(facility.getFacility());
+            list.add(facility.getFacilityName());
         }
         ComboBox<String> facilityBox = new ComboBox<String>();
         facilityBox.setPromptText("Select a facility");
@@ -121,7 +121,7 @@ public class ReservationController {
     public void checkin(MouseEvent event, TableView<Reservation> table) {
         if (table.getSelectionModel().getSelectedItem() != null) {
             Reservation reservation = table.getSelectionModel().getSelectedItem();
-            if (reservation.getStatus().equals("Booked")) {
+            if (reservation.getStatus().equals("Booked") || reservation.getStatus().equals("Late")) {
                 reservation.setStatus("Checked In");
             }
         }
@@ -144,7 +144,7 @@ public class ReservationController {
     public void cancelBooking(MouseEvent e, TableView<Reservation> table) {
         if (table.getSelectionModel().getSelectedItem() != null) {
             Reservation reservation = table.getSelectionModel().getSelectedItem();
-            if (reservation.getStatus().equals("Booked")) {
+            if (reservation.getStatus().equals("Booked") || reservation.getStatus().equals("Late")) {
                 reservation.setStatus("Cancelled");
             }
         }
