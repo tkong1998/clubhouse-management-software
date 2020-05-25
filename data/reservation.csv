@@ -1,10 +1,10 @@
 member_id, booked_facility, date, start_time, end_time, status
-member003, BBQ Site, 2020-05-25, 12:30, 15:30, Booked
+member003, BBQ Site, 2020-05-25, 12:30, 15:30, Late
 member001, Swimming Pool, 2020-05-24, 12:00, 15:00, No Show
 member001, Swimming Pool, 2020-05-22, 12:00, 15:00, No Show
 member002, Spa, 2020-05-23, 12:00, 13:30, No Show
 member002, Spa, 2020-05-22, 12:00, 13:30, No Show
 member004, Gym, 2020-06-24, 12:00, 13:30, Booked
 member004, BBQ Site, 2020-05-24, 12:00, 15:00, No Show
-member001, BBQ Site, 2020-05-25, 12:00, 15:00, Booked
-member002, BBQ Site, 2020-05-25, 12:00, 15:00, Booked
+member001, BBQ Site, 2020-05-25, 12:00, 15:00, Late
+member002, BBQ Site, 2020-05-25, 12:00, 15:00, Late

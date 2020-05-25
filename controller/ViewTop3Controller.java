@@ -41,7 +41,7 @@ public class ViewTop3Controller {
         TableColumn<Map.Entry<Facility, Map<String, Integer>>, Integer> totalCol = new TableColumn<Map.Entry<Facility, Map<String, Integer>>, Integer>(
                 "Total");
 
-        facilityCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getKey().getFacility()));
+        facilityCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getKey().getFacilityName()));
         bookCol.setCellValueFactory(
                 value -> new SimpleIntegerProperty(value.getValue().getValue().get("Booked")).asObject());
         cancelCol.setCellValueFactory(

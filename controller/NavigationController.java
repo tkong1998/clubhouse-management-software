@@ -28,10 +28,6 @@ public class NavigationController {
     stage.setScene(Main.getScenes().get("TOP3"));
   }
 
-  public void viewUtilizationRate(MouseEvent event) {
-    stage.setScene(Main.getScenes().get("MANAGER_NAVIGATION"));
-  }
-
 public void signout(MouseEvent e) {
   SigninController.signout();
   stage.setScene(Main.getScenes().get("SIGNIN"));

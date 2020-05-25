@@ -142,7 +142,7 @@ public class FileLoader {
 
     public Facility findFacility(String name) {
         for (Facility facility : facilityList) {
-            if (facility.getFacility().equals(name)) {
+            if (facility.getFacilityName().equals(name)) {
                 return facility;
             }
         }
@@ -235,7 +235,7 @@ public class FileLoader {
             file.write("member_id, booked_facility, date, start_time, end_time, status\n");
             for (Reservation reservation : reservationList) {
                 file.write(reservation.getMember().getId() + ", ");
-                file.write(reservation.getFacility().getFacility() + ", ");
+                file.write(reservation.getFacility().getFacilityName() + ", ");
                 file.write(reservation.getDate().toString() + ", ");
                 file.write(reservation.getStart().toString() + ", ");
                 file.write(reservation.getEnd().toString() + ", ");
