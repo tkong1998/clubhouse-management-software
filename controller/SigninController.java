@@ -2,8 +2,6 @@ package controller;
 
 import view.*;
 
-import java.util.*;
-import java.io.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
