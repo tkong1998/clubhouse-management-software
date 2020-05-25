@@ -53,6 +53,9 @@ public class ViewUsageController {
           if (reservation.getDate().equals(date)) {
             if ((!time.isBefore(reservation.getStart()) && !time.isAfter(reservation.getEnd()))
                 || (!end.isBefore(reservation.getStart()) && !end.isAfter(reservation.getEnd()))) {
+              if (reservation.getStatus().equals("Cancelled")) {
+                continue;
+              }
               count += 1;
             }
           }
@@ -82,8 +85,8 @@ public class ViewUsageController {
 
   public void updateTable(TableView<String[]> table, DatePicker datePicker, ComboBox<String> timeComboBox,
       Label message) {
-    
-    if (datePicker.getValue() == null || timeComboBox.getSelectionModel().getSelectedItem() ==  null) {
+
+    if (datePicker.getValue() == null || timeComboBox.getSelectionModel().getSelectedItem() == null) {
       message.setText("Please select a date and the time you would like to check");
       return;
     }

@@ -46,8 +46,8 @@ public class ReservationController {
         TableColumn<Reservation, String> statusCol = new TableColumn<Reservation, String>("Status");
 
         memberCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getMember().getName()));
-        facilityCol
-                .setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getFacility().getFacilityName()));
+        facilityCol.setCellValueFactory(
+                value -> new SimpleStringProperty(value.getValue().getFacility().getFacilityName()));
         dateCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getDate().toString()));
         startCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getStart().toString()));
         endCol.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEnd().toString()));
@@ -115,12 +115,20 @@ public class ReservationController {
     }
 
     public void goToMakeReservation(MouseEvent event) {
+        Main.getScenes().put("RESERVATION", new ReservationView(stage).getScene());
+        Main.getScenes().put("MAKE_RESERVATION", new MakeReservationView(stage).getScene());
         stage.setScene(Main.getScenes().get("MAKE_RESERVATION"));
     }
 
     public void checkin(MouseEvent event, TableView<Reservation> table) {
         if (table.getSelectionModel().getSelectedItem() != null) {
             Reservation reservation = table.getSelectionModel().getSelectedItem();
+            if (!LocalDate.now().equals(reservation.getDate())
+                    && (LocalTime.now().isBefore(reservation.getStart().plusMinutes(-15))
+                            || (LocalTime.now().isAfter(reservation.getEnd())))) {
+                return;
+            }
+
             if (reservation.getStatus().equals("Booked") || reservation.getStatus().equals("Late")) {
                 reservation.setStatus("Checked In");
             }
@@ -165,7 +173,6 @@ public class ReservationController {
         if (memberComboBox.getValue() == null || facilityComboBox.getValue() == null || datePicker.getValue() == null
                 || startComboBox.getValue() == null) {
             message.setText("Invalid reservation, please check again.");
-
             return;
         }
 
