@@ -28,7 +28,7 @@ public class ViewUsageController {
       time = LocalTime.parse(timeComboBox.getSelectionModel().getSelectedItem());
     } catch (Exception e) {
       e.getStackTrace();
-      message.setText("Please enter the time in ##:## format");
+      message.setText("Please select a time");
     }
     ArrayList<Facility> facilities = fileLoader.getFacilities();
     ArrayList<Reservation> reservations = fileLoader.getReservations();
@@ -83,7 +83,7 @@ public class ViewUsageController {
   public void updateTable(TableView<String[]> table, DatePicker datePicker, ComboBox<String> timeComboBox,
       Label message) {
     
-    if (datePicker == null || timeComboBox == null) {
+    if (datePicker.getValue() == null || timeComboBox.getSelectionModel().getSelectedItem() ==  null) {
       message.setText("Please select a date and the time you would like to check");
       return;
     }
